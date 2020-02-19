@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Quake-III</string>
+    <string name="refreshButton">Refresh</string>
 </resources>
