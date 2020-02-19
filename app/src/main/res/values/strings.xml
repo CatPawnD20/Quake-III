@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Quake-III</string>
     <string name="refreshButton">Refresh</string>
+    <string name="mapButtonName">Map</string>
+    <string name="simulationButtonName">Simulation</string>
+    <string name="earthquakeListButtonName">Earthquake List</string>
+    <string name="optionsButtonName">Options</string>
 </resources>
