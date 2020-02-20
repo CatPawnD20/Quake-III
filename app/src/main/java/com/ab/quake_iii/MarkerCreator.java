@@ -31,11 +31,11 @@ public class MarkerCreator {
 
     //PingList ile gelen Ping verileri MarkerOptions tipine çevrilir.
     private void fillMarkerList(){
-       /* for(Ping p : pingList){
+        for(Ping p : pingList){
             MarkerOptions markerOptions = new MarkerOptions().position(p.getPoint()).title("WTF")
-                    .icon(bitmapDescriptorFromVector (starter.getApplicationContext(), R.drawable.ic_brightness_1_black_24dp));
+                    .icon(bitmapDescriptorFromVector (MainActivity.context, R.drawable.ic_brightness_1_black_24dp));
             markerList.add(markerOptions);
-        }*/
+        }
     }
 
     //Custom oluşturulan marker görselinin ayarlanması

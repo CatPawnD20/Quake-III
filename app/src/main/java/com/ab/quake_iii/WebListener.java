@@ -2,11 +2,6 @@ package com.ab.quake_iii;
 
 import android.os.AsyncTask;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 
 public class WebListener extends AsyncTask<Void,Void,Void> {
 
@@ -30,7 +25,7 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        try {
+       /* try {
             Document doc = Jsoup.connect(webURL).get();
 
             Elements deprem = doc.select("pre");
@@ -40,7 +35,7 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/
         return null;
     }
 

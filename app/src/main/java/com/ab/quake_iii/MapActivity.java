@@ -1,5 +1,6 @@
 package com.ab.quake_iii;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
@@ -22,7 +25,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Button refreshButton;
     private GoogleMap gMap;
 
-    private List<Ping> pingList;
+    private List<MarkerOptions> markerList;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyARLi5lVDsohtSSY2d0pCBCDIMlnl3K_Kg";
 
@@ -31,9 +34,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        System.out.println("MapActivityy yaratıldı");
-
-        pingList = MainActivity.getPingList();
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
@@ -70,9 +70,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         public void onClick(View view) {
             //test etmek için kondu değişecek, sadece haritanın yenilenmesi gibi bir seçenek de olabilir
             //Bunun için haritaya tekrardan bundle vermen gerekebilir.Ama hangisi bilmiyorum?
-            //mapView.onStop();
-            //mapView.onCreate(savedInstanceState);
-            //Şimdilik komple yeniliyor
             MainActivity.getDataFromWeb();
             onStop();
             startActivity(new Intent(MapActivity.this, MapActivity.class));
@@ -101,14 +98,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        //addMarkerToMap();
+        addMarkerToMap();
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38,34), 5));
     }
 
-    /*private void addMarkerToMap(){
-        markerList = Container.getMarkerList();
+    private void addMarkerToMap(){
+        markerList = MainActivity.getMarkerList();
         for(MarkerOptions mo : markerList){
-            map.addMarker(mo);
+            gMap.addMarker(mo);
         }
-    }*/
+    }
 }
