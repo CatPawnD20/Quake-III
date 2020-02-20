@@ -5,4 +5,14 @@
     <string name="simulationButtonName">Simulation</string>
     <string name="earthquakeListButtonName">Earthquake List</string>
     <string name="optionsButtonName">Options</string>
+    <string name="dateViewName">   Date   </string>
+    <string name="timeViewName">Time  </string>
+    <string name="latitudeViewName"> LAT </string>
+    <string name="longitutdeViewName">LONG</string>
+    <string name="depthViewName">   Depth  </string>
+    <string name="magnitutdeViewName">Magnitutde</string>
+    <string name="locationViewName">  Location</string>
+    <string name="mdViewName">MD </string>
+    <string name="mlViewName">ML </string>
+    <string name="mwViewName">Mw</string>
 </resources>
