@@ -11,8 +11,16 @@ import java.io.IOException;
 public class WebListener extends AsyncTask<Void,Void,Void> {
 
     private static String webURL = "http://www.koeri.boun.edu.tr/scripts/lst6.asp";
-    private  String earthquakeString;
+    private String earthquakeString;
     private String s;
+
+    private Parser parser;
+
+    public void getDataFromWeb() {
+        parser = Creator.getObject("parser");
+        //program açılınca ilk veri çekilme süreci
+        parser.createPingsFromString();
+    }
 
     @Override
     protected void onPreExecute() {
@@ -57,4 +65,9 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
     }
 
 }
+
+
+
+
+
 

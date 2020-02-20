@@ -14,7 +14,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
-
+import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -22,17 +22,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Button refreshButton;
     private GoogleMap gMap;
 
-    //private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyARLi5lVDsohtSSY2d0pCBCDIMlnl3K_Kg";
+    private List<Ping> pingList;
+
+    private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyARLi5lVDsohtSSY2d0pCBCDIMlnl3K_Kg";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-//        Bundle mapViewBundle = null;
-//        if (savedInstanceState != null) {
-//            mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
-//        }
+        System.out.println("MapActivityy yaratıldı");
+
+        pingList = MainActivity.getPingList();
+
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            //Bundle'da Key'e karşılık mapViewBundle tutuluyor.Gereksiz, key göstermek yerine başka kelime konabilir
+            mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
+        }
 
         mapView = (MapView) findViewById(R.id.mapView);
         refreshButton = (Button) findViewById(R.id.refreshButton);
@@ -45,18 +52,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//
-//        Bundle mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY);
-//        if (mapViewBundle == null) {
-//            mapViewBundle = new Bundle();
-//            outState.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle);
-//        }
-//
-//        mapView.onSaveInstanceState(mapViewBundle);
-//    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Bundle mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mapView.onSaveInstanceState(mapViewBundle);
+    }
 
 
     private class ButtonListener implements View.OnClickListener {
@@ -67,6 +73,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             //mapView.onStop();
             //mapView.onCreate(savedInstanceState);
             //Şimdilik komple yeniliyor
+            MainActivity.getDataFromWeb();
+            onStop();
             startActivity(new Intent(MapActivity.this, MapActivity.class));
         }
     }
@@ -74,13 +82,33 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onResume() {
         super.onResume();
-        mapView.onResume(); //mapView.onResume() tüm lifecycle için vardı ben sildim onları, bir daha düşün
+        //mapView.onResume()/onDestroy() gibi tüm lifecycle için ilgili method vardı ben sildim onları, bir daha düşün
+        mapView.onResume();
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MapActivity.this, MainActivity.class));
+        super.onBackPressed();
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+        //addMarkerToMap();
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38,34), 5));
     }
+
+    /*private void addMarkerToMap(){
+        markerList = Container.getMarkerList();
+        for(MarkerOptions mo : markerList){
+            map.addMarker(mo);
+        }
+    }*/
 }
