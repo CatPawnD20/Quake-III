@@ -7,21 +7,37 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button mapButton;
     private Button simulationButton;
     private Button earthquakeListButton;
     private Button optionsButton;
+    private static List<Ping> pingList;
+    private static List<MarkerOptions> markerList;
+    private static WebListener webListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mapButton = (Button) findViewById(R.id.mapButton);
-        simulationButton = (Button) findViewById(R.id.simulationButton);
-        earthquakeListButton = (Button) findViewById(R.id.earthquakeListButton);
-        optionsButton = (Button) findViewById(R.id.optionsButton);
+
+        Creator creator = new Creator();
+        creator.yarat();
+
+        webListener = Creator.getObject("webListener");
+
+        getDataFromWeb();
+
+        mapButton = findViewById(R.id.mapButton);
+        simulationButton = findViewById(R.id.simulationButton);
+        earthquakeListButton = findViewById(R.id.earthquakeListButton);
+        optionsButton = findViewById(R.id.optionsButton);
+
         mapButton.setOnClickListener(new mapScreen());
         simulationButton.setOnClickListener(new simulationScreen());
         earthquakeListButton.setOnClickListener(new earthquakeListScreen());
@@ -29,11 +45,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public static void getDataFromWeb() {
+        webListener.getDataFromWeb();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private class mapScreen implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-
-            startActivity(new Intent(MainActivity.this,MapActivity.class));
+            Intent i = new Intent(MainActivity.this, MapActivity.class);
+            startActivity(i);
         }
     }
 
@@ -56,5 +87,21 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             startActivity(new Intent(MainActivity.this,OptionsActivity.class));
         }
+    }
+
+    public static List<Ping> getPingList() {
+        return pingList;
+    }
+
+    public static List<MarkerOptions> getMarkerList() {
+        return markerList;
+    }
+
+    public static void setPingList(List<Ping> pingList) {
+        MainActivity.pingList = pingList;
+    }
+
+    public static void setMarkerList(List<MarkerOptions> markerList) {
+        MainActivity.markerList = markerList;
     }
 }
