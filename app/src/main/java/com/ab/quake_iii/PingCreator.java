@@ -7,14 +7,12 @@ public class PingCreator {
 
     private List<Ping> pingList = new ArrayList<>();
     private Container container;
+    private List<List<String>> aqua;
 
 
-    public void createPings(){
+    public void createPings(List<List<String>> aqua){
         container = Creator.getObject("container");
-        Ping ping1 = new Ping(35,34);
-        Ping ping2 = new Ping(37,31);
-        pingList.add(ping1);
-        pingList.add(ping2);
+        this.aqua = aqua;
         container.setPingList(pingList);
     }
 }
