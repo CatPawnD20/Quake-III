@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button optionsButton;
     private static List<Ping> pingList;
     private static List<MarkerOptions> markerList;
-    private static WebListener webListener;
+    //private static WebListener webListener;
     public static Context context;
 
     @Override
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Creator creator = new Creator();
         creator.yarat();
 
-        webListener = Creator.getObject("webListener");
+        //webListener = Creator.getObject("webListener");
 
         getDataFromWeb();
 
@@ -53,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static void getDataFromWeb() {
+        WebListener webListener = (WebListener) new WebListener().execute();
+        /*Veri çekme işi background'da olmalı ve çakışma olduğu için bir süre veri çekilmesi beklenmeli
+          Başka çözümler bulunabilir. Fakat verinin tam gelmemesi, geç gelmesi gibi durumlara test ile
+          çözümler üretilmeli */
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         webListener.getDataFromWeb();
     }
 

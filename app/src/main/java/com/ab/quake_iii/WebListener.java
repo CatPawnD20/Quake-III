@@ -17,9 +17,12 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
 
     public void getDataFromWeb() {
         parser = Creator.getObject("parser");
-        doInBackground();
-        //program açılınca ilk veri çekilme süreci
         parser.createPingsFromString(earthquakeString);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
     }
 
     @Override
@@ -37,7 +40,6 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
 
             earthquakeString = String.valueOf(deprem);
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,11 +47,10 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
         return null;
     }
 
-    public String getEarthquakeString() {
-        return earthquakeString;
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
     }
-
-
 }
 
 
