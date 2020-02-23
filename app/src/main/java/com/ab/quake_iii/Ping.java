@@ -3,31 +3,54 @@ package com.ab.quake_iii;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
+import java.util.List;
 
 public class Ping {
 
-    private final String location;
+    private final List<String> location;
     private final double depth;
-    private LatLng point;
-    private double magnitude;
+    private String magnitudeMD;
+    private double magnitudeML;
+    private String magnitudeMW;
     private final Date date;
     private final Date time;
     private final double latitude;
     private final double longtidue;
+    private LatLng point;
 
-    public Ping(Date date, Date time, double latitude, double longtidue, double depth, double magnitude, String location){
+    public Ping(Date date, Date time, double latitude, double longtidue, double depth,double magnitudeML, List<String> location){
         this.date = date;
         this.time = time;
         this.latitude = latitude;
         this.longtidue = longtidue;
         this.location = location;
         this.depth = depth;
-        this.magnitude = magnitude;
+        this.magnitudeML = magnitudeML;
+        point = new LatLng(latitude,longtidue);
+
+    }
+    public Ping (Date date, Date time, double latitude, double longtidue, double depth, String magnitudeMD, double magnitudeML, String magnitudeMW, List<String> location){
+        this.date = date;
+        this.time = time;
+        this.latitude = latitude;
+        this.longtidue = longtidue;
+        this.location = location;
+        this.depth = depth;
+        this.magnitudeMD = magnitudeMD;
+        this.magnitudeML = magnitudeML;
+        this.magnitudeMW = magnitudeMW;
         point = new LatLng(latitude,longtidue);
     }
-
     public LatLng getPoint() {
         return point;
+    }
+
+    public String getMagnitudeMD() {
+        return magnitudeMD;
+    }
+
+    public String getMagnitudeMW() {
+        return magnitudeMW;
     }
 
     public double getLongtidue() {
@@ -38,7 +61,7 @@ public class Ping {
         return latitude;
     }
 
-    public String getLocation() {
+    public List<String> getLocation() {
         return location;
     }
 
@@ -46,8 +69,8 @@ public class Ping {
         return depth;
     }
 
-    public double getMagnitude() {
-        return magnitude;
+    public double getMagnitudeML() {
+        return magnitudeML;
     }
 
     public Date getDate() {

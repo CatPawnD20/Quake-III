@@ -14,8 +14,8 @@ public class Container {
     public List<Ping> getPingList() {
         return pingList;
     }
-
     //Set fonksiyonunu karıştırdım biraz bunu düzenle. sadece pingList eşitlesin
+
     public void setPingList(List<Ping> pingList) {
         this.pingList = pingList;
         markerCreator = Creator.getObject("markerCreator");
