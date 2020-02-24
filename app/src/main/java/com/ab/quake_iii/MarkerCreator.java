@@ -20,12 +20,10 @@ public class MarkerCreator {
     private Container container;
     private List<Ping> pingList;
 
-    //Markerlar yaratılacak hnenüz yaratılmadı
     public void createMarkers(){
         container = Creator.getObject("container");
         pingList = container.getPingList();
         fillMarkerList();
-        //MarkerYarat ve liste doldur sonra aşağıdaki işlem
         container.setMarkerList(markerList);
     }
 

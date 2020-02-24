@@ -1,7 +1,5 @@
 package com.ab.quake_iii;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -68,11 +65,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            //test etmek için kondu değişecek, sadece haritanın yenilenmesi gibi bir seçenek de olabilir
+           /* //test etmek için kondu değişecek, sadece haritanın yenilenmesi gibi bir seçenek de olabilir
             //Bunun için haritaya tekrardan bundle vermen gerekebilir.Ama hangisi bilmiyorum?
             MainActivity.getDataFromWeb();
             onStop();
-            startActivity(new Intent(MapActivity.this, MapActivity.class));
+            startActivity(new Intent(MapActivity.this, MapActivity.class));*/
         }
     }
 
@@ -91,8 +88,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(MapActivity.this, MainActivity.class));
         super.onBackPressed();
+        //startActivity(new Intent(MapActivity.this, MainActivity.class));
     }
 
     @Override
