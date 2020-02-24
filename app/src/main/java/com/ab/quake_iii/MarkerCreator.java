@@ -34,6 +34,7 @@ public class MarkerCreator {
             String title = "" + p.getMagnitudeML() + " " + p.getLocation();
             MarkerOptions markerOptions = new MarkerOptions().position(p.getPoint()).title(title)
                     .icon(bitmapDescriptorFromVector (MainActivity.context, R.drawable.ic_brightness_1_black_24dp));
+            p.setMarkerOptions(markerOptions);
             markerList.add(markerOptions);
         }
     }

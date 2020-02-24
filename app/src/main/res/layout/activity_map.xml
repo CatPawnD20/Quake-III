@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,23 +17,68 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="15">
 
-            <Button
-                android:id="@+id/refreshButton"
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/fromOneRadio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/refreshButton"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.9"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.74" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:text="@string/fromOneRadio" />
+
+            <RadioButton
+                android:id="@+id/fromTwoRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fromTwoRadio" />
+
+            <RadioButton
+                android:id="@+id/fromThreeRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fromThreeRadio" />
+
+            <RadioButton
+                android:id="@+id/fromFourRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fromFourRadio" />
+
+            <RadioButton
+                android:id="@+id/fromFiveRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fromFiveRadio" />
+
+            <RadioButton
+                android:id="@+id/fromSixRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fromSixRadio" />
+
+            <RadioButton
+                android:id="@+id/fromSevenRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fromSevenRadio" />
+
+
+        </RadioGroup>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/middleLinear"
