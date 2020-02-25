@@ -1,12 +1,12 @@
 package com.ab.quake_iii;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -119,4 +119,5 @@ public class MainActivity extends AppCompatActivity {
     public static void setMarkerList(List<MarkerOptions> markerList) {
         MainActivity.markerList = markerList;
     }
+
 }

@@ -13,6 +13,7 @@ public class PingCreator {
     private Container container;
     private List<List<String>> aqua;
 
+
     /*
     Değişiklikler
     inilitiazeNewPings location verisi düzeltildi
@@ -25,8 +26,9 @@ public class PingCreator {
         container = Creator.getObject("container");
         this.aqua = aqua;
         //initiliazeNewPings();
-        crePingList();
+        pingList = createPingList(aqua);
         container.setPingList(pingList);
+
     }
     /*
     Pingleri Liste halinde veren bir fonksiyon eklendi
