@@ -15,11 +15,18 @@
     <string name="mdViewName">MD </string>
     <string name="mlViewName">ML </string>
     <string name="mwViewName">Mw</string>
-    <string name="fromOneRadio">Hepsi</string>
+    <string name="fromOneRadio">All</string>
     <string name="fromTwoRadio">>2</string>
     <string name="fromThreeRadio">>3</string>
     <string name="fromFourRadio">>4</string>
     <string name="fromFiveRadio">>5</string>
     <string name="fromSixRadio">>6</string>
     <string name="fromSevenRadio">>7</string>
+    <string name="allRadio">All</string>
+    <string name="twoDaysRadio">2D</string>
+    <string name="oneDaysRadio">1D</string>
+    <string name="twelveHoursRadio">12H</string>
+    <string name="sixHoursRadio">6H</string>
+    <string name="threeHoursRadio">3H</string>
+    <string name="oneHourRadio">1H</string>
 </resources>

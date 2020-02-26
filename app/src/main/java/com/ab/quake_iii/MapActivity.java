@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.Nullable;;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,13 +12,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
+/*import java.time.LocalDate;
+import java.time.LocalTime;*/
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mapView;
     private GoogleMap gMap;
+    private RadioGroup radioGroupDepth;
     private RadioButton fromOneRadio;
     private RadioButton fromTwoRadio;
     private RadioButton fromThreeRadio;
@@ -26,9 +33,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private RadioButton fromFiveRadio;
     private RadioButton fromSixRadio;
     private RadioButton fromSevenRadio;
-    private RadioGroup radioGroup;
+    private RadioGroup radioGroupTime;
+    private RadioButton allTimeRadio;
+    private RadioButton twoDaysRadio;
+    private RadioButton oneDayRadio;
+    private RadioButton twelveHoursRadio;
+    private RadioButton sixHoursRadio;
+    private RadioButton threeHoursRadio;
+    private RadioButton oneHourRadio;
+
 
     private List<Ping> pingList;
+    private List<Ping> tempPingList;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyARLi5lVDsohtSSY2d0pCBCDIMlnl3K_Kg";
 
@@ -37,6 +53,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        AndroidThreeTen.init(this);
+
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             //Bundle'da Key'e karşılık mapViewBundle tutuluyor.Gereksiz, key göstermek yerine başka kelime konabilir
@@ -44,6 +62,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
         mapView = findViewById(R.id.mapView);
+
+        radioGroupDepth = findViewById(R.id.radioGroupDepth);
         fromOneRadio = findViewById(R.id.fromOneRadio);
         fromTwoRadio = findViewById(R.id.fromTwoRadio);
         fromThreeRadio = findViewById(R.id.fromThreeRadio);
@@ -51,9 +71,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         fromFiveRadio = findViewById(R.id.fromFiveRadio);
         fromSixRadio = findViewById(R.id.fromSixRadio);
         fromSevenRadio = findViewById(R.id.fromSevenRadio);
-        radioGroup = findViewById(R.id.radioGroup);
 
-        radioGroup.setOnCheckedChangeListener(new RadioListener());
+        radioGroupTime = findViewById(R.id.radioGroupTime);
+        allTimeRadio = findViewById(R.id.allTimeRadio);
+        twoDaysRadio = findViewById(R.id.twoDaysRadio);
+        oneDayRadio = findViewById(R.id.oneDayRadio);
+        twelveHoursRadio = findViewById(R.id.twelveHoursRadio);
+        sixHoursRadio = findViewById(R.id.sixHoursRadio);
+        threeHoursRadio = findViewById(R.id.threeHoursRadio);
+        oneHourRadio = findViewById(R.id.oneHourRadio);
+
+        radioGroupDepth.setOnCheckedChangeListener(new RadioDepthListener());
+        radioGroupTime.setOnCheckedChangeListener(new RadioTimeListener());
 
         pingList = MainActivity.getPingList();
 
@@ -98,41 +127,89 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        fromThreeRadio.setChecked(true);
-        addMarkerToMap(3.0);
+        addMarkerToMapWithDepth(3.0);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38,34), 5));
     }
 
-    private void addMarkerToMap(Double filterNum){
-        gMap.clear();
-        for(Ping p: pingList){
-            if(p.getMagnitudeML() > filterNum){
-                p.getMarkerOptions().visible(true);
-                gMap.addMarker(p.getMarkerOptions());
-            }else{
-                p.getMarkerOptions().visible(false);
+    private class RadioDepthListener implements RadioGroup.OnCheckedChangeListener {
+
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+            if(i == R.id.fromOneRadio){
+                addMarkerToMapWithDepth(1.0);
+            }else if( i == R.id.fromTwoRadio){
+                addMarkerToMapWithDepth(2.0);
+            }else if( i == R.id.fromThreeRadio){
+                addMarkerToMapWithDepth(3.0);
+            }else if( i == R.id.fromFourRadio){
+                addMarkerToMapWithDepth(4.0);
+            }else if( i == R.id.fromFiveRadio){
+                addMarkerToMapWithDepth(5.0);
+            }else if( i == R.id.fromSixRadio){
+                addMarkerToMapWithDepth(6.0);
+            }else if( i == R.id.fromSevenRadio){
+                addMarkerToMapWithDepth(7.0);
             }
         }
     }
 
-    private class RadioListener implements RadioGroup.OnCheckedChangeListener {
+    private void addMarkerToMapWithDepth(Double filterNum){
+        tempPingList = new ArrayList<>();
+        for(Ping p: pingList){
+            if(p.getMagnitudeML() > filterNum){
+                tempPingList.add(p);
+            }
+        }
+        new RadioTimeListener().onCheckedChanged(radioGroupTime, radioGroupTime.getCheckedRadioButtonId());
+    }
 
+    private class RadioTimeListener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
-            if(i == R.id.fromOneRadio){
-                addMarkerToMap(1.0);
-            }else if( i == R.id.fromTwoRadio){
-                addMarkerToMap(2.0);
-            }else if( i == R.id.fromThreeRadio){
-                addMarkerToMap(3.0);
-            }else if( i == R.id.fromFourRadio){
-                addMarkerToMap(4.0);
-            }else if( i == R.id.fromFiveRadio){
-                addMarkerToMap(5.0);
-            }else if( i == R.id.fromSixRadio){
-                addMarkerToMap(6.0);
-            }else if( i == R.id.fromSevenRadio){
-                addMarkerToMap(7.0);
+            if(i == R.id.allTimeRadio){
+                addMarkerToMapWithTime("D", 5);
+            }else if( i == R.id.twoDaysRadio){
+                addMarkerToMapWithTime("D",2);
+            }else if( i == R.id.oneDayRadio){
+                addMarkerToMapWithTime("D", 1);
+            }else if( i == R.id.twelveHoursRadio){
+                addMarkerToMapWithTime("T", 12);
+            }else if( i == R.id.sixHoursRadio){
+                addMarkerToMapWithTime("T",6);
+            }else if( i == R.id.threeHoursRadio){
+                addMarkerToMapWithTime("T",3);
+            }else if( i == R.id.oneHourRadio){
+                addMarkerToMapWithTime("T",1);
+            }
+        }
+    }
+
+    private void addMarkerToMapWithTime(String type, int timeOrDay){
+        gMap.clear();
+        if(type.equals("D")){
+            LocalDate localDateD = LocalDate.now().minusDays(timeOrDay);
+            LocalTime localTimeD = LocalTime.now();
+            for(Ping p: tempPingList) {
+                if(p.getDate().isAfter(localDateD) ||
+                        (p.getDate().isEqual(localDateD) && p.getTime().isAfter(localTimeD))){
+                    gMap.addMarker(p.getMarkerOptions());
+                }
+            }
+        }else{
+            LocalDate localDateT1 = LocalDate.now();
+            LocalDate localDateT2 = LocalDate.of(1970,02,20);
+            LocalTime localTimeNow = LocalTime.now();
+            LocalTime localTimeT = localTimeNow.minusHours(timeOrDay);
+            if(localTimeNow.getHour()<timeOrDay){
+                localDateT1.minusDays(1);
+                localDateT2 = localDateT1;
+            }
+            for(Ping p: tempPingList){
+                if((p.getTime().isAfter(localTimeT) && p.getDate().isEqual(localDateT1)) ||
+                        (p.getDate().isEqual(localDateT2))){
+                    gMap.addMarker(p.getMarkerOptions());
+                }
             }
         }
     }

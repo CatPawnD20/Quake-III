@@ -17,67 +17,133 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="15">
+            android:layout_weight="7.5"
+            android:orientation="vertical">
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
+            <RadioGroup
+                android:id="@+id/radioGroupDepth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/fromOneRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fromOneRadio" />
+
+                <RadioButton
+                    android:id="@+id/fromTwoRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fromTwoRadio" />
+
+                <RadioButton
+                    android:id="@+id/fromThreeRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/fromThreeRadio" />
+
+                <RadioButton
+                    android:id="@+id/fromFourRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fromFourRadio" />
+
+                <RadioButton
+                    android:id="@+id/fromFiveRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fromFiveRadio" />
+
+                <RadioButton
+                    android:id="@+id/fromSixRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fromSixRadio" />
+
+                <RadioButton
+                    android:id="@+id/fromSevenRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fromSevenRadio" />
+
+            </RadioGroup>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:layout_weight="7.5"
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/fromOneRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fromOneRadio" />
+            <RadioGroup
+                android:id="@+id/radioGroupTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <RadioButton
-                android:id="@+id/fromTwoRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fromTwoRadio" />
+                <RadioButton
+                    android:id="@+id/allTimeRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/allRadio" />
 
-            <RadioButton
-                android:id="@+id/fromThreeRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fromThreeRadio" />
+                <RadioButton
+                    android:id="@+id/twoDaysRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/twoDaysRadio" />
 
-            <RadioButton
-                android:id="@+id/fromFourRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fromFourRadio" />
+                <RadioButton
+                    android:id="@+id/oneDayRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/oneDaysRadio" />
 
-            <RadioButton
-                android:id="@+id/fromFiveRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fromFiveRadio" />
+                <RadioButton
+                    android:id="@+id/twelveHoursRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/twelveHoursRadio" />
 
-            <RadioButton
-                android:id="@+id/fromSixRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fromSixRadio" />
+                <RadioButton
+                    android:id="@+id/sixHoursRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sixHoursRadio" />
 
-            <RadioButton
-                android:id="@+id/fromSevenRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fromSevenRadio" />
+                <RadioButton
+                    android:id="@+id/threeHoursRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/threeHoursRadio" />
 
+                <RadioButton
+                    android:id="@+id/oneHourRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/oneHourRadio" />
 
-        </RadioGroup>
-
+            </RadioGroup>
         </LinearLayout>
 
         <LinearLayout
