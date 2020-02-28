@@ -8,12 +8,13 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-
 public class WebListener extends AsyncTask<Void,Void,Void> {
 
     private static String webURL = "http://www.koeri.boun.edu.tr/scripts/lst6.asp";
     private String earthquakeString;
     private Parser parser;
+    //Veri çekme sürecinin bittiğinde flag=true olarak değiştirilir.
+    public static boolean flag = false;
 
     public void getDataFromWeb() {
         parser = Creator.getObject("parser");
@@ -28,6 +29,7 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         getData();
+        flag = true;
         return null;
     }
 

@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private Button optionsButton;
     private static List<Ping> pingList;
     private static List<MarkerOptions> markerList;
-    //private static WebListener webListener;
     public static Context context;
 
     @Override
@@ -34,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         Creator creator = new Creator();
         creator.yarat();
-
-        //webListener = Creator.getObject("webListener");
 
         getDataFromWeb();
 
@@ -58,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
           Başka çözümler bulunabilir. Fakat verinin tam gelmemesi, geç gelmesi gibi durumlara test ile
           çözümler üretilmeli */
         try {
-            Thread.sleep(3000);
+            while (webListener.flag == false){
+                Thread.sleep(500);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

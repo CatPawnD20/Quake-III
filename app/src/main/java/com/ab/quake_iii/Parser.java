@@ -9,10 +9,6 @@ public class Parser {
     private String[] lineString;
     private List<List<String>> aqua;
 
-
-    /*
-
-     */
     public void createPingsFromString(String earthquakeString){
         lineString = firstParse(earthquakeString);
         aqua = secondParse(lineString);
@@ -28,11 +24,13 @@ public class Parser {
         String[] line = temp.split("\n");
         return line;
     }
+
     /*
     Değişiklik
     sadece son iki elemanı siliyoruz
     ve parse işlemi burda bitiyor.
      */
+
     public static List<List<String>> secondParse(String[] lineString){
 
         List<String> lineList = new ArrayList<>();
@@ -52,8 +50,8 @@ public class Parser {
             }
             lastList.add(eachLineWordList);
         }
-        lastList.remove(501);
-        lastList.remove(500);
+        lastList.remove(lastList.size()-1);
+        lastList.remove(lastList.size()-1);
         return lastList;
     }
 }

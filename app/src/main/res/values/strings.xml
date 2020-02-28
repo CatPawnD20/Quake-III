@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Quake-III</string>
+    <string name="app_name">Quake III</string>
     <string name="refreshButton">Refresh</string>
     <string name="mapButtonName">Map</string>
     <string name="simulationButtonName">Simulation</string>
@@ -15,4 +15,11 @@
     <string name="mdViewName">MD </string>
     <string name="mlViewName">ML </string>
     <string name="mwViewName">Mw</string>
+    <string name="fromOneRadio">Hepsi</string>
+    <string name="fromTwoRadio">>2</string>
+    <string name="fromThreeRadio">>3</string>
+    <string name="fromFourRadio">>4</string>
+    <string name="fromFiveRadio">>5</string>
+    <string name="fromSixRadio">>6</string>
+    <string name="fromSevenRadio">>7</string>
 </resources>

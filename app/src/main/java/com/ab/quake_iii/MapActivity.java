@@ -1,10 +1,8 @@
 package com.ab.quake_iii;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,20 +10,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mapView;
-    private Button refreshButton;
     private GoogleMap gMap;
+    private RadioButton fromOneRadio;
+    private RadioButton fromTwoRadio;
+    private RadioButton fromThreeRadio;
+    private RadioButton fromFourRadio;
+    private RadioButton fromFiveRadio;
+    private RadioButton fromSixRadio;
+    private RadioButton fromSevenRadio;
+    private RadioGroup radioGroup;
 
-    private List<MarkerOptions> markerList;
+    private List<Ping> pingList;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyARLi5lVDsohtSSY2d0pCBCDIMlnl3K_Kg";
 
@@ -34,17 +37,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             //Bundle'da Key'e karşılık mapViewBundle tutuluyor.Gereksiz, key göstermek yerine başka kelime konabilir
             mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
         }
 
-        mapView = (MapView) findViewById(R.id.mapView);
-        refreshButton = (Button) findViewById(R.id.refreshButton);
+        mapView = findViewById(R.id.mapView);
+        fromOneRadio = findViewById(R.id.fromOneRadio);
+        fromTwoRadio = findViewById(R.id.fromTwoRadio);
+        fromThreeRadio = findViewById(R.id.fromThreeRadio);
+        fromFourRadio = findViewById(R.id.fromFourRadio);
+        fromFiveRadio = findViewById(R.id.fromFiveRadio);
+        fromSixRadio = findViewById(R.id.fromSixRadio);
+        fromSevenRadio = findViewById(R.id.fromSevenRadio);
+        radioGroup = findViewById(R.id.radioGroup);
 
-        refreshButton.setOnClickListener(new ButtonListener());
+        radioGroup.setOnCheckedChangeListener(new RadioListener());
+
+        pingList = MainActivity.getPingList();
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -65,17 +76,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    private class ButtonListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            //test etmek için kondu değişecek, sadece haritanın yenilenmesi gibi bir seçenek de olabilir
-            //Bunun için haritaya tekrardan bundle vermen gerekebilir.Ama hangisi bilmiyorum?
-            MainActivity.getDataFromWeb();
-            onStop();
-            startActivity(new Intent(MapActivity.this, MapActivity.class));
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -91,21 +91,49 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(MapActivity.this, MainActivity.class));
         super.onBackPressed();
+        //startActivity(new Intent(MapActivity.this, MainActivity.class));
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        addMarkerToMap();
+        fromThreeRadio.setChecked(true);
+        addMarkerToMap(3.0);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38,34), 5));
     }
 
-    private void addMarkerToMap(){
-        markerList = MainActivity.getMarkerList();
-        for(MarkerOptions mo : markerList){
-            gMap.addMarker(mo);
+    private void addMarkerToMap(Double filterNum){
+        gMap.clear();
+        for(Ping p: pingList){
+            if(p.getMagnitudeML() > filterNum){
+                p.getMarkerOptions().visible(true);
+                gMap.addMarker(p.getMarkerOptions());
+            }else{
+                p.getMarkerOptions().visible(false);
+            }
+        }
+    }
+
+    private class RadioListener implements RadioGroup.OnCheckedChangeListener {
+
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            if(i == R.id.fromOneRadio){
+                addMarkerToMap(1.0);
+            }else if( i == R.id.fromTwoRadio){
+                addMarkerToMap(2.0);
+            }else if( i == R.id.fromThreeRadio){
+                addMarkerToMap(3.0);
+            }else if( i == R.id.fromFourRadio){
+                addMarkerToMap(4.0);
+            }else if( i == R.id.fromFiveRadio){
+                addMarkerToMap(5.0);
+            }else if( i == R.id.fromSixRadio){
+                addMarkerToMap(6.0);
+            }else if( i == R.id.fromSevenRadio){
+                addMarkerToMap(7.0);
+            }
         }
     }
 }
