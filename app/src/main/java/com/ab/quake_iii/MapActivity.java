@@ -157,7 +157,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void addMarkerToMapWithDepth(Double filterNum){
         tempPingList = new ArrayList<>();
         for(Ping p: pingList){
-            if(p.getMagnitudeML() > filterNum){
+            if(p.getMagnitudeML() >= filterNum){
                 tempPingList.add(p);
             }
         }
