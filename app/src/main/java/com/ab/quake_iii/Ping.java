@@ -22,7 +22,8 @@ public class Ping {
     private final double longtidue;
     private LatLng point;
     private MarkerOptions markerOptions;
-
+    
+    //Teke düşür
     public Ping(LocalDate date, LocalTime time, double latitude, double longtidue, double depth, double magnitudeML, List<String> location){
         this.date = date;
         this.time = time;
@@ -48,16 +49,16 @@ public class Ping {
     }
 
     //Geçici Çözüm
-    @Override
-    public String toString(){
-        return dateFormat.format(date) +
-                " " + timeFormat.format(time) +
-                "                " + String.format(String.valueOf(depth)) +
-                "          " + magnitudeMD +
-                " " + magnitudeML +
-                " " + magnitudeMW +
-                "      " + location;
-    }
+//    @Override
+//    public String toString(){
+//        return dateFormat.format(date) +
+//                " " + timeFormat.format(time) +
+//                "                " + String.format(String.valueOf(depth)) +
+//                "          " + magnitudeMD +
+//                " " + magnitudeML +
+//                " " + magnitudeMW +
+//                "      " + location;
+//    }
 
     public LatLng getPoint() {
         return point;

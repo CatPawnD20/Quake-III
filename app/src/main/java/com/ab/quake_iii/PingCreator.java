@@ -2,8 +2,10 @@ package com.ab.quake_iii;
 
 /*import java.time.LocalDate;
 import java.time.LocalTime;*/
+
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,56 +33,9 @@ public class PingCreator {
         crePingList();
         container.setPingList(pingList);
     }
-
     /*
-    Pingleri Liste halinde veren bir fonksiyon eklendi
-    NOT: Magnitutde Verileri STRİNG DOUBLE STRİNG seklinde ping objesine ekleniyor
+    düzeltme lazım
      */
-
-    /*private List<Ping> createPingList(List<List<String>> lastList){
-        List<Ping> temp = new ArrayList<>();
-        for(List<String> lineEQ : lastList){
-            try {
-                Date date = new SimpleDateFormat("yyyy.MM.dd").parse(lineEQ.get(0));
-                DateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-                Date time = sdf.parse(lineEQ.get(1));
-                double y = Double.valueOf(lineEQ.get(2));
-                double x = Double.valueOf(lineEQ.get(3));
-                double depth = Double.valueOf(lineEQ.get(4));
-                //Magnitude deneme amaçlı dizi olarak alınmadı
-                String magnitudeMD = lineEQ.get(5);
-                double magnitudeML = Double.valueOf(lineEQ.get(6));
-                String magnitudeMW = lineEQ.get(7);
-                List<String> location = new ArrayList<>();
-                location.add(lineEQ.get(8));
-
-//                while (!(lineEQ.get(9+i).startsWith("ilk"))){
-//                    if(lineEQ.get(9+i).startsWith("REV"))continue;
-//                    location.add(lineEQ.get(9+i));
-//                    i++;
-//                }
-                for (int i = 0; i < lineEQ.size()-9 ; i++) {
-                    String controller = lineEQ.get(9+i);
-                    if (controller.contains("lk")){
-                        break;
-                    }
-                    else if(controller.contains("REV")){
-                        break;
-                    }
-                    else{
-                        location.add(lineEQ.get(9+i));
-                    }
-                }
-
-                Ping ping = new Ping(date,time,y,x,depth, magnitudeMD,magnitudeML,magnitudeMW, location);
-                temp.add(ping);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return temp;
-    }*/
-
     private void crePingList(){
 
         for(List<String> lineEQ : aqua){
@@ -102,19 +57,6 @@ public class PingCreator {
                 location.add(lineEQ.get(9+i));
                 i++;
             }
-
-                /*for (int i = 0; i < lineEQ.size()-9 ; i++) {
-                    String controller = lineEQ.get(9+i);
-                    if (controller.contains("lk")){
-                        break;
-                    }
-                    else if(controller.contains("REV")){
-                        break;
-                    }
-                    else{
-                        location.add(lineEQ.get(9+i));
-                    }
-                }*/
 
             Ping ping = new Ping(date,time,y,x,depth, magnitudeML, location);
             pingList.add(ping);
