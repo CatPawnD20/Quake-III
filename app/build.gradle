@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.ab.quake_iii"
-        minSdkVersion 15
+        minSdkVersion var2
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -28,4 +28,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'org.jsoup:jsoup:1.12.2'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
+
 }

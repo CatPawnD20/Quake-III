@@ -3,9 +3,10 @@ package com.ab.quake_iii;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+/*import java.time.LocalDate;
+import java.time.LocalTime;*/
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalTime;
 import java.util.List;
 
 public class Ping {
@@ -15,17 +16,14 @@ public class Ping {
     private String magnitudeMD;
     private double magnitudeML;
     private String magnitudeMW;
-    private final Date date;
-    private final Date time;
+    private final LocalDate date;
+    private final LocalTime time;
     private final double latitude;
     private final double longtidue;
     private LatLng point;
     private MarkerOptions markerOptions;
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd ");
-    DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
 
-
-    public Ping(Date date, Date time, double latitude, double longtidue, double depth, double magnitudeML, List<String> location){
+    public Ping(LocalDate date, LocalTime time, double latitude, double longtidue, double depth, double magnitudeML, List<String> location){
         this.date = date;
         this.time = time;
         this.latitude = latitude;
@@ -36,7 +34,7 @@ public class Ping {
         point = new LatLng(latitude,longtidue);
 
     }
-    public Ping (Date date, Date time, double latitude, double longtidue, double depth, String magnitudeMD, double magnitudeML, String magnitudeMW, List<String> location){
+    public Ping (LocalDate date, LocalTime time, double latitude, double longtidue, double depth, String magnitudeMD, double magnitudeML, String magnitudeMW, List<String> location){
         this.date = date;
         this.time = time;
         this.latitude = latitude;
@@ -93,11 +91,11 @@ public class Ping {
         return magnitudeML;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public Date getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
