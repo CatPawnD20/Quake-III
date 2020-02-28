@@ -50,8 +50,8 @@ public class Parser {
             }
             lastList.add(eachLineWordList);
         }
-        lastList.remove(501);
-        lastList.remove(500);
+        lastList.remove(lastList.size()-1);
+        lastList.remove(lastList.size()-1);
         return lastList;
     }
 }

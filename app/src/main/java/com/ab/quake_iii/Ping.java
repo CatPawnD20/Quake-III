@@ -46,6 +46,19 @@ public class Ping {
         this.magnitudeMW = magnitudeMW;
         point = new LatLng(latitude,longtidue);
     }
+
+    //Geçici Çözüm
+    @Override
+    public String toString(){
+        return dateFormat.format(date) +
+                " " + timeFormat.format(time) +
+                "                " + String.format(String.valueOf(depth)) +
+                "          " + magnitudeMD +
+                " " + magnitudeML +
+                " " + magnitudeMW +
+                "      " + location;
+    }
+
     public LatLng getPoint() {
         return point;
     }
