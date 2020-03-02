@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         MapsInitializer.initialize(getApplicationContext());
 
         Creator creator = new Creator();
-        creator.yarat();
+        creator.create();
 
         getDataFromWeb();
 

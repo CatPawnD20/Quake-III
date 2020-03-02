@@ -1,11 +1,9 @@
 package com.ab.quake_iii;
 
 import android.os.AsyncTask;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
 import java.io.IOException;
 
 public class WebListener extends AsyncTask<Void,Void,Void> {

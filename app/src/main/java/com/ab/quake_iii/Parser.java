@@ -25,12 +25,6 @@ public class Parser {
         return line;
     }
 
-    /*
-    Değişiklik
-    sadece son iki elemanı siliyoruz
-    ve parse işlemi burda bitiyor.
-     */
-
     public static List<List<String>> secondParse(String[] lineString){
 
         List<String> lineList = new ArrayList<>();

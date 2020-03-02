@@ -1,7 +1,6 @@
 package com.ab.quake_iii;
 
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +9,6 @@ public class Container {
     private MarkerCreator markerCreator;
     private List<Ping> pingList = new ArrayList<>();
     private List<MarkerOptions> markerList = new ArrayList<>();
-
-    public List<Ping> getPingList() {
-        return pingList;
-    }
 
     public void setPingList(List<Ping> pingList) {
         this.pingList = pingList;
@@ -25,7 +20,9 @@ public class Container {
     public List<MarkerOptions> getMarkerList() {
         return markerList;
     }
-
+    public List<Ping> getPingList() {
+        return pingList;
+    }
     //Set fonksiyonunu karıştırdım biraz bunu düzenle. sadece markerList eşitlesin
     public void setMarkerList(List<MarkerOptions> markerList) {
         this.markerList = markerList;

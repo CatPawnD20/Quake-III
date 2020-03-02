@@ -11,24 +11,24 @@ public class Creator {
     private static WebListener webListener;
     private static MarkerCreator markerCreator;
 
-    public static <T> T getObject(String s){
-        return (T) hashMap.get(s);
-    }
-
-    public void yarat() {
+    public void create() {
         parser = new Parser();
         container = new Container();
         pingCreator = new PingCreator();
         webListener = new WebListener();
         markerCreator = new MarkerCreator();
-        staticYerleştir();
+        staticSetUp();
     }
 
-    private static void staticYerleştir() {
+    private static void staticSetUp() {
         hashMap.put("parser", parser);
         hashMap.put("container", container);
         hashMap.put("pingCreator", pingCreator);
         hashMap.put("webListener", webListener);
         hashMap.put("markerCreator", markerCreator);
+    }
+
+    public static <T> T getObject(String s){
+        return (T) hashMap.get(s);
     }
 }

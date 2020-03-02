@@ -22,19 +22,7 @@ public class Ping {
     private final double longtidue;
     private LatLng point;
     private MarkerOptions markerOptions;
-    
-    //Teke düşür
-    public Ping(LocalDate date, LocalTime time, double latitude, double longtidue, double depth, double magnitudeML, List<String> location){
-        this.date = date;
-        this.time = time;
-        this.latitude = latitude;
-        this.longtidue = longtidue;
-        this.location = location;
-        this.depth = depth;
-        this.magnitudeML = magnitudeML;
-        point = new LatLng(latitude,longtidue);
 
-    }
     public Ping (LocalDate date, LocalTime time, double latitude, double longtidue, double depth, String magnitudeMD, double magnitudeML, String magnitudeMW, List<String> location){
         this.date = date;
         this.time = time;
