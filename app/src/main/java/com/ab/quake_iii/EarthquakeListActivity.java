@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +21,28 @@ import org.threeten.bp.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class EarthquakeListActivity extends AppCompatActivity {
 
     private static List<Ping> pingList;
+    private RadioGroup radioGroupML;
+    private RadioButton fromZeroRadio;
+    private RadioButton fromOneRadio;
+    private RadioButton fromTwoRadio;
+    private RadioButton fromThreeRadio;
+    private RadioButton fromFourRadio;
+    private RadioButton fromFiveRadio;
+    private RadioGroup radioGroupTime;
+    private RadioButton allTimeRadio;
+    private RadioButton oneDayRadio;
+    private RadioButton twelveHoursRadio;
+    private RadioButton sixHoursRadio;
+    private RadioButton threeHoursRadio;
+    private RadioButton oneHourRadio;
+    private static double mlLimit = 0;
+    private static int timeLimit = 5;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,8 +51,30 @@ public class EarthquakeListActivity extends AppCompatActivity {
         pingList = MainActivity.getPingList();
 
         ListView pingListView =(ListView) findViewById(R.id.pingListView);
-        PingListAdapter adapter = new PingListAdapter(this,R.layout.configuration_listview,pingList);
+        PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
         pingListView.setAdapter(adapter);
+
+
+
+        radioGroupML = findViewById(R.id.radioGroupML);
+        fromZeroRadio = findViewById(R.id.fromZeroRadio);
+        fromOneRadio = findViewById(R.id.fromOneRadio);
+        fromTwoRadio = findViewById(R.id.fromTwoRadio);
+        fromThreeRadio = findViewById(R.id.fromThreeRadio);
+        fromFourRadio = findViewById(R.id.fromFourRadio);
+        fromFiveRadio = findViewById(R.id.fromFiveRadio);
+
+
+        radioGroupTime = findViewById(R.id.radioGroupTime);
+        allTimeRadio = findViewById(R.id.allTimeRadio);
+        oneDayRadio = findViewById(R.id.oneDayRadio);
+        twelveHoursRadio = findViewById(R.id.twelveHoursRadio);
+        sixHoursRadio = findViewById(R.id.sixHoursRadio);
+        threeHoursRadio = findViewById(R.id.threeHoursRadio);
+        oneHourRadio = findViewById(R.id.oneHourRadio);
+
+        radioGroupML.setOnCheckedChangeListener(new RadioMLListener(pingListView));
+        radioGroupTime.setOnCheckedChangeListener(new RadioTimeListener(pingListView));
 
     }
 
@@ -50,6 +93,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
     public static void setPingList(List<Ping> pingList) {
         EarthquakeListActivity.pingList = pingList;
     }
+
 
     private class PingListAdapter extends ArrayAdapter<Ping> {
         Context context;
@@ -82,6 +126,140 @@ public class EarthquakeListActivity extends AppCompatActivity {
             tvDepth.setText(String.valueOf(depth));
             tvLocation.setText(String.valueOf(location));
             return convertView;
+        }
+    }
+
+    private class RadioMLListener implements RadioGroup.OnCheckedChangeListener {
+        ListView pingListView;
+
+        public RadioMLListener(ListView pingListView) {
+            this.pingListView = pingListView;
+        }
+
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            if(checkedId == R.id.fromZeroRadio){
+                mlLimit = 0;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, mlLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.fromOneRadio){
+                mlLimit = 1;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, mlLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.fromTwoRadio){
+                mlLimit = 2;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, mlLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.fromThreeRadio){
+                mlLimit = 3;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, mlLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            if(checkedId == R.id.fromFourRadio){
+                mlLimit = 4;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, mlLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.fromFiveRadio){
+                mlLimit = 5;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, mlLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+
+        }
+    }
+
+    private class RadioTimeListener implements RadioGroup.OnCheckedChangeListener {
+        ListView pingListView;
+
+
+        public RadioTimeListener(ListView pingListView) {
+            this.pingListView = pingListView;
+
+        }
+
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            if(checkedId == R.id.allTimeRadio){
+                timeLimit = 5;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.oneDayRadio){
+                timeLimit = 1;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.twelveHoursRadio){
+                timeLimit = 12;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.sixHoursRadio){
+                timeLimit = 6;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.threeHoursRadio){
+                timeLimit = 3;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+            else if(checkedId == R.id.oneHourRadio){
+                timeLimit = 1;
+                PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
+                pingListView.setAdapter(adapter);
+
+            }
+        }
+    }
+
+    private List<Ping> makeSelectedList(List<Ping> pingList,double mlLimit){
+        List<Ping> temp = new ArrayList<>();
+            for (Ping p:pingList) {
+                if(p.getMagnitudeML()>mlLimit){
+                    temp.add(p);
+                }
+            }
+            return temp;
+
+    }
+    /*
+    anasını sıkım kör oldum 5 saattir aynı yerdeyım denemedıgım bok kalmadı kardesım bu ısı coz lutfen ne hata yaptıgımı merak edıyorum anasını sikim datelerinin tarihlerinin
+    sadece 1 günlük geriye dönük liste oluştursun amcık fonksiyon baska bir bok istemedim a.q
+
+     */
+    private List<Ping> makeSelectedList(List<Ping> pingList,int timeLimit){
+        List<Ping> temp = new ArrayList<>();
+        if (timeLimit==5){
+            return pingList;
+//        }else if(timeLimit == 1){
+//            LocalDate localDateD = LocalDate.now().minusDays(timeLimit);
+//            LocalTime localTimeD = LocalTime.now();
+//            for(Ping p : pingList){
+//                if(p.getDate().isAfter(localDateD) ||
+//                        (p.getDate().isEqual(localDateD) && p.getTime().isAfter(localTimeD))){
+//                    temp.add(p);
+//                }
+//            }
+//            return temp;
+        }
+        else{
+            return pingList;
         }
     }
 }

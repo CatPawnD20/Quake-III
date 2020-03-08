@@ -26,13 +26,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private MapView mapView;
     private GoogleMap gMap;
     private RadioGroup radioGroupDepth;
+    private RadioButton fromZeroRadio;
     private RadioButton fromOneRadio;
     private RadioButton fromTwoRadio;
     private RadioButton fromThreeRadio;
     private RadioButton fromFourRadio;
     private RadioButton fromFiveRadio;
     private RadioButton fromSixRadio;
-    private RadioButton fromSevenRadio;
     private RadioGroup radioGroupTime;
     private RadioButton allTimeRadio;
     private RadioButton twoDaysRadio;
@@ -64,13 +64,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapView = findViewById(R.id.mapView);
 
         radioGroupDepth = findViewById(R.id.radioGroupDepth);
+        fromZeroRadio = findViewById(R.id.fromZeroRadio);
         fromOneRadio = findViewById(R.id.fromOneRadio);
         fromTwoRadio = findViewById(R.id.fromTwoRadio);
         fromThreeRadio = findViewById(R.id.fromThreeRadio);
         fromFourRadio = findViewById(R.id.fromFourRadio);
         fromFiveRadio = findViewById(R.id.fromFiveRadio);
         fromSixRadio = findViewById(R.id.fromSixRadio);
-        fromSevenRadio = findViewById(R.id.fromSevenRadio);
+
 
         radioGroupTime = findViewById(R.id.radioGroupTime);
         allTimeRadio = findViewById(R.id.allTimeRadio);
@@ -130,7 +131,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         addMarkerToMapWithDepth(3.0);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38,34), 5));
     }
-
+    /*
+    Düzeltme yaptım kanki
+    7inciyi cıkartıp 0 'ı ekledim önceki halinde haritada 0 -1 aralıgını goremıyorduk
+    All tanımını da 0 dan baslayanlara cektım
+     */
     private class RadioDepthListener implements RadioGroup.OnCheckedChangeListener {
 
         @Override
@@ -148,8 +153,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 addMarkerToMapWithDepth(5.0);
             }else if( i == R.id.fromSixRadio){
                 addMarkerToMapWithDepth(6.0);
-            }else if( i == R.id.fromSevenRadio){
-                addMarkerToMapWithDepth(7.0);
+            }else if( i == R.id.fromZeroRadio){
+                addMarkerToMapWithDepth(0.0);
             }
         }
     }

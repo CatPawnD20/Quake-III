@@ -35,6 +35,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <RadioButton
+                    android:id="@+id/fromZeroRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fromZeroRadio" />
+
+                <RadioButton
                     android:id="@+id/fromOneRadio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,12 +76,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fromSixRadio" />
-
-                <RadioButton
-                    android:id="@+id/fromSevenRadio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fromSevenRadio" />
 
             </RadioGroup>
 

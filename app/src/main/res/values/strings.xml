@@ -15,7 +15,8 @@
     <string name="mdViewName">MD </string>
     <string name="mlViewName">ML </string>
     <string name="mwViewName">Mw</string>
-    <string name="fromOneRadio">All</string>
+    <string name="fromZeroRadio">All</string>
+    <string name="fromOneRadio">>1</string>
     <string name="fromTwoRadio">>2</string>
     <string name="fromThreeRadio">>3</string>
     <string name="fromFourRadio">>4</string>

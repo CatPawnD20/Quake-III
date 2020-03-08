@@ -50,50 +50,52 @@
                 android:orientation="vertical">
 
                 <RadioGroup
+                    android:id="@+id/radioGroupML"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton"
+                        android:id="@+id/fromZeroRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/fromZeroRadio" />
+
+                    <RadioButton
+                        android:id="@+id/fromOneRadio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fromOneRadio" />
 
                     <RadioButton
-                        android:id="@+id/radioButton2"
+                        android:id="@+id/fromTwoRadio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fromTwoRadio" />
 
                     <RadioButton
-                        android:id="@+id/radioButton3"
+                        android:id="@+id/fromThreeRadio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/fromThreeRadio" />
 
                     <RadioButton
-                        android:id="@+id/radioButton4"
+                        android:id="@+id/fromFourRadio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/fromFourRadio" />
 
                     <RadioButton
-                        android:id="@+id/radioButton5"
+                        android:id="@+id/fromFiveRadio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/fromFiveRadio" />
 
-                    <RadioButton
-                        android:id="@+id/radioButton6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/fromSixRadio" />
                 </RadioGroup>
 
                 <RadioGroup
