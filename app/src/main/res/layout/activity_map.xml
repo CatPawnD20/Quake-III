@@ -153,20 +153,69 @@
             android:layout_weight="70"
             android:orientation="vertical">
 
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
 
-        </LinearLayout>
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-        <LinearLayout
-            android:id="@+id/bottomLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="15"
-            android:orientation="vertical">
+                <Button
+                    android:id="@+id/normalButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignEnd="@id/mapView"
+                    android:layout_alignRight="@id/mapView"
+                    android:layout_alignBottom="@id/mapView"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="210dp"
+                    android:background="@mipmap/normal_image"
+                    android:visibility="invisible" />
 
+                <Button
+                    android:id="@+id/terrainButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignEnd="@id/mapView"
+                    android:layout_alignRight="@id/mapView"
+                    android:layout_alignBottom="@id/mapView"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="150dp"
+                    android:background="@mipmap/terrain_image"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/hybridButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignEnd="@id/mapView"
+                    android:layout_alignRight="@id/mapView"
+                    android:layout_alignBottom="@id/mapView"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="90dp"
+                    android:background="@mipmap/satellite_image"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/mapStyleMenu"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignEnd="@id/mapView"
+                    android:layout_alignRight="@id/mapView"
+                    android:layout_alignBottom="@id/mapView"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@mipmap/normal_image" />
+
+            </RelativeLayout>
         </LinearLayout>
 
     </LinearLayout>

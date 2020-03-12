@@ -1,10 +1,11 @@
 package com.ab.quake_iii;
 
 import android.os.Bundle;
-import android.widget.RadioButton;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
 
-import androidx.annotation.Nullable;;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,9 +14,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.jakewharton.threetenabp.AndroidThreeTen;
-
-/*import java.time.LocalDate;
-import java.time.LocalTime;*/
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
 import java.util.ArrayList;
@@ -26,22 +24,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private MapView mapView;
     private GoogleMap gMap;
     private RadioGroup radioGroupDepth;
-    private RadioButton fromZeroRadio;
-    private RadioButton fromOneRadio;
-    private RadioButton fromTwoRadio;
-    private RadioButton fromThreeRadio;
-    private RadioButton fromFourRadio;
-    private RadioButton fromFiveRadio;
-    private RadioButton fromSixRadio;
     private RadioGroup radioGroupTime;
-    private RadioButton allTimeRadio;
-    private RadioButton twoDaysRadio;
-    private RadioButton oneDayRadio;
-    private RadioButton twelveHoursRadio;
-    private RadioButton sixHoursRadio;
-    private RadioButton threeHoursRadio;
-    private RadioButton oneHourRadio;
-
+    private Button hybridMapButton;
+    private Button terrainMapButton;
+    private Button normalMapButton;
+    private Button mapStyleMenu;
 
     private List<Ping> pingList;
     private List<Ping> tempPingList;
@@ -64,32 +51,57 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapView = findViewById(R.id.mapView);
 
         radioGroupDepth = findViewById(R.id.radioGroupDepth);
-        fromZeroRadio = findViewById(R.id.fromZeroRadio);
-        fromOneRadio = findViewById(R.id.fromOneRadio);
-        fromTwoRadio = findViewById(R.id.fromTwoRadio);
-        fromThreeRadio = findViewById(R.id.fromThreeRadio);
-        fromFourRadio = findViewById(R.id.fromFourRadio);
-        fromFiveRadio = findViewById(R.id.fromFiveRadio);
-        fromSixRadio = findViewById(R.id.fromSixRadio);
-
-
         radioGroupTime = findViewById(R.id.radioGroupTime);
-        allTimeRadio = findViewById(R.id.allTimeRadio);
-        twoDaysRadio = findViewById(R.id.twoDaysRadio);
-        oneDayRadio = findViewById(R.id.oneDayRadio);
-        twelveHoursRadio = findViewById(R.id.twelveHoursRadio);
-        sixHoursRadio = findViewById(R.id.sixHoursRadio);
-        threeHoursRadio = findViewById(R.id.threeHoursRadio);
-        oneHourRadio = findViewById(R.id.oneHourRadio);
 
         radioGroupDepth.setOnCheckedChangeListener(new RadioDepthListener());
         radioGroupTime.setOnCheckedChangeListener(new RadioTimeListener());
+
+        mapStyleMenu = findViewById(R.id.mapStyleMenu);
+        mapStyleMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(normalMapButton.getVisibility() == View.INVISIBLE){
+                    normalMapButton.setVisibility(View.VISIBLE);
+                    terrainMapButton.setVisibility(View.VISIBLE);
+                    hybridMapButton.setVisibility(View.VISIBLE);
+                    mapStyleMenu.setBackgroundResource(R.mipmap.cancel_menu_image);
+                }else{
+                    normalMapButton.setVisibility(View.INVISIBLE);
+                    terrainMapButton.setVisibility(View.INVISIBLE);
+                    hybridMapButton.setVisibility(View.INVISIBLE);
+                    mapStyleMenu.setBackgroundResource(R.mipmap.normal_image);
+                }
+            }
+        });
+
+        normalMapButton = findViewById(R.id.normalButton);
+        normalMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            }
+        });
+
+        terrainMapButton = findViewById(R.id.terrainButton);
+        terrainMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            }
+        });
+
+        hybridMapButton = findViewById(R.id.hybridButton);
+        hybridMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            }
+        });
 
         pingList = MainActivity.getPingList();
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-
 
     }
 
@@ -104,7 +116,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mapView.onSaveInstanceState(mapViewBundle);
     }
-
 
     @Override
     protected void onResume() {
@@ -131,11 +142,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         addMarkerToMapWithDepth(3.0);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38,34), 5));
     }
-    /*
-    Düzeltme yaptım kanki
-    7inciyi cıkartıp 0 'ı ekledim önceki halinde haritada 0 -1 aralıgını goremıyorduk
-    All tanımını da 0 dan baslayanlara cektım
-     */
+
     private class RadioDepthListener implements RadioGroup.OnCheckedChangeListener {
 
         @Override
@@ -207,8 +214,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             LocalTime localTimeNow = LocalTime.now();
             LocalTime localTimeT = localTimeNow.minusHours(timeOrDay);
             if(localTimeNow.getHour()<timeOrDay){
-                localDateT1.minusDays(1);
                 localDateT2 = localDateT1;
+                localDateT1 = localDateT1.minusDays(1);
             }
             for(Ping p: tempPingList){
                 if((p.getTime().isAfter(localTimeT) && p.getDate().isEqual(localDateT1)) ||
