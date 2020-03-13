@@ -45,7 +45,7 @@ public class Ping {
 //                "          " + magnitudeMD +
 //                " " + magnitudeML +
 //                " " + magnitudeMW +
-//                "      " + location;
+//                "      " + settings;
 //    }
 
     public LatLng getPoint() {

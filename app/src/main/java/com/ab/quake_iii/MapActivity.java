@@ -1,9 +1,12 @@
 package com.ab.quake_iii;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
@@ -25,7 +29,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap gMap;
     private RadioGroup radioGroupDepth;
     private RadioGroup radioGroupTime;
-    private Button hybridMapButton;
+    private Button satelliteMapButton;
     private Button terrainMapButton;
     private Button normalMapButton;
     private Button mapStyleMenu;
@@ -63,13 +67,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if(normalMapButton.getVisibility() == View.INVISIBLE){
                     normalMapButton.setVisibility(View.VISIBLE);
                     terrainMapButton.setVisibility(View.VISIBLE);
-                    hybridMapButton.setVisibility(View.VISIBLE);
-                    mapStyleMenu.setBackgroundResource(R.mipmap.cancel_menu_image);
+                    satelliteMapButton.setVisibility(View.VISIBLE);
+                    mapStyleMenu.setBackgroundResource(R.drawable.cancel);
                 }else{
                     normalMapButton.setVisibility(View.INVISIBLE);
                     terrainMapButton.setVisibility(View.INVISIBLE);
-                    hybridMapButton.setVisibility(View.INVISIBLE);
-                    mapStyleMenu.setBackgroundResource(R.mipmap.normal_image);
+                    satelliteMapButton.setVisibility(View.INVISIBLE);
+                    mapStyleMenu.setBackgroundResource(R.drawable.settings);
                 }
             }
         });
@@ -90,8 +94,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        hybridMapButton = findViewById(R.id.hybridButton);
-        hybridMapButton.setOnClickListener(new View.OnClickListener() {
+        satelliteMapButton = findViewById(R.id.satelliteButton);
+        satelliteMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
@@ -139,8 +143,53 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+        gMap.getUiSettings().setMapToolbarEnabled(false);
+        gMap.setInfoWindowAdapter(new InfoWindowConfigure(MapActivity.this));
         addMarkerToMapWithDepth(3.0);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38,34), 5));
+    }
+
+    private class InfoWindowConfigure implements GoogleMap.InfoWindowAdapter{
+
+        private final View mWindow;
+        private Context context;
+
+        public InfoWindowConfigure(Context context) {
+            this.context = context;
+            this.mWindow = LayoutInflater.from(context).inflate(R.layout.configuration_mapinfo, null);
+        }
+
+        private void fillWindowText(Marker marker, View view){
+            String[] title = marker.getTitle().split("/");
+            String[] snippet = marker.getSnippet().split("/");
+
+            TextView tvLocation = view.findViewById(R.id.locationTitle);
+            tvLocation.setText(title[0]);
+
+            TextView tvMagnitude = view.findViewById(R.id.magnitudeTitle);
+            tvMagnitude.setText(title[1]);
+
+            TextView tvDepth = view.findViewById(R.id.depthTitle);
+            tvDepth.setText(snippet[0]);
+
+            TextView tvDate = view.findViewById(R.id.dateTitle);
+            tvDate.setText(snippet[1]);
+
+            TextView tvTime = view.findViewById(R.id.timeTitle);
+            tvTime.setText(snippet[2]);
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            fillWindowText(marker, mWindow);
+            return mWindow;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            fillWindowText(marker, mWindow);
+            return mWindow;
+        }
     }
 
     private class RadioDepthListener implements RadioGroup.OnCheckedChangeListener {

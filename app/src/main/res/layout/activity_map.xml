@@ -150,7 +150,7 @@
             android:id="@+id/middleLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="70"
+            android:layout_weight="85"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -173,8 +173,8 @@
                     android:layout_alignBottom="@id/mapView"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="210dp"
-                    android:background="@mipmap/normal_image"
+                    android:layout_marginBottom="240dp"
+                    android:background="@drawable/normal_map"
                     android:visibility="invisible" />
 
                 <Button
@@ -186,12 +186,12 @@
                     android:layout_alignBottom="@id/mapView"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="150dp"
-                    android:background="@mipmap/terrain_image"
+                    android:layout_marginBottom="170dp"
+                    android:background="@drawable/terrain_map"
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/hybridButton"
+                    android:id="@+id/satelliteButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignEnd="@id/mapView"
@@ -199,8 +199,8 @@
                     android:layout_alignBottom="@id/mapView"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="90dp"
-                    android:background="@mipmap/satellite_image"
+                    android:layout_marginBottom="100dp"
+                    android:background="@drawable/satellite_map"
                     android:visibility="invisible" />
 
                 <Button
@@ -213,7 +213,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="30dp"
-                    android:background="@mipmap/normal_image" />
+                    android:background="@drawable/settings" />
 
             </RelativeLayout>
         </LinearLayout>
