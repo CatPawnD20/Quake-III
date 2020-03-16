@@ -3,9 +3,10 @@
     package="com.ab.quake_iii">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,8 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyARLi5lVDsohtSSY2d0pCBCDIMlnl3K_Kg"/>
         <activity
@@ -29,12 +28,12 @@
 
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme"/>
-
-
         <activity android:name=".MapActivity"/>
         <activity android:name=".SimulationActivity"/>
         <activity android:name=".EarthquakeListActivity"/>
         <activity android:name=".OptionsActivity"/>
+        <service android:name=".ExampleJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>
