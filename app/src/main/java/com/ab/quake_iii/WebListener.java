@@ -1,6 +1,7 @@
 package com.ab.quake_iii;
 
 import android.os.AsyncTask;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -27,7 +28,6 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         getData();
-        flag = true;
         return null;
     }
 
@@ -43,7 +43,7 @@ public class WebListener extends AsyncTask<Void,Void,Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        flag = true;
         return null;
     }
 

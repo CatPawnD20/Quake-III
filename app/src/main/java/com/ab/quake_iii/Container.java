@@ -10,16 +10,21 @@ public class Container {
     private List<Ping> pingList = new ArrayList<>();
     private List<MarkerOptions> markerList = new ArrayList<>();
 
+    private boolean isService = false;
+
     public void setPingList(List<Ping> pingList) {
         this.pingList = pingList;
-        markerCreator = Creator.getObject("markerCreator");
-        MainActivity.setPingList(pingList);
-        markerCreator.createMarkers();
+        if(!isService){
+            MainActivity.setPingList(pingList);
+            markerCreator = Creator.getObject("markerCreator");
+            markerCreator.createMarkers();
+        }
     }
 
     public List<MarkerOptions> getMarkerList() {
         return markerList;
     }
+
     public List<Ping> getPingList() {
         return pingList;
     }
@@ -29,4 +34,7 @@ public class Container {
         MainActivity.setMarkerList(markerList);
     }
 
+    public void setService(boolean service) {
+        isService = service;
+    }
 }

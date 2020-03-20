@@ -1,65 +1,34 @@
 package com.ab.quake_iii;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.job.JobParameters;
-import android.app.job.JobService;
+import com.firebase.jobdispatcher.JobParameters;
+import com.firebase.jobdispatcher.JobService;
 import android.content.Intent;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationManagerCompat;
 
 import org.threeten.bp.LocalTime;
 
-
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class ExampleJobService extends JobService {
     private static final String TAG = "ExampleJobService";
-    private boolean jobCancelled = false;
-    private Container container;
     public static LocalTime localTime;
+    BackgroundTask backgroundTask;
 
     @Override
     public boolean onStartJob(JobParameters params) {
         Log.d(TAG, "Schedule Job Started.");
-        doBackgroundWork(params);
+        backgroundTask = new BackgroundTask(params);
+
+        backgroundTask.execute();
         return true;
-    }
-
-    private void doBackgroundWork(final JobParameters params) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(jobCancelled){
-                    return;
-                }else{
-                    Creator creator = new Creator();
-                    creator.create();
-
-                    //WebListener webListener = (WebListener) new WebListener().execute();
-                    WebListener webListener = new WebListener();
-                    webListener.getData();
-                    webListener.getDataFromWeb();
-
-                    container = Creator.getObject("container");
-
-                    Ping lastPing = container.getPingList().get(0);
-                    if(lastPing.getTime().isAfter(localTime.minusMinutes(30))){
-                        startNotify(lastPing);
-                    }
-                    jobFinished(params, false);
-                }
-            }
-        }).start();
     }
 
     @Override
     public boolean onStopJob(JobParameters params) {
         Log.d(TAG, "Schedule Job Stopped.");
-        jobCancelled = true;
         return true;
     }
 
@@ -69,9 +38,52 @@ public class ExampleJobService extends JobService {
 
         NotificationCreator nc = new NotificationCreator();
         Notification notification = nc.createNotification(pendingIntent, this, lastPing);
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, notification);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+        notificationManager.notify(1377,notification);
 
         return START_NOT_STICKY;
     }
+
+    public class BackgroundTask extends AsyncTask<Void, Void, Void>{
+        private Container container;
+        private JobParameters params;
+        private WebListener webListener;
+
+        public BackgroundTask(JobParameters params) {
+            this.params = params;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Creator creator = new Creator();
+            creator.create();
+            container = Creator.getObject("container");
+            container.setService(true);
+            webListener = new WebListener();
+            webListener.getData();
+
+            webListener.getDataFromWeb();
+
+            Ping lastPing = container.getPingList().get(0);
+
+            if(lastPing.getTime().isAfter(localTime.minusMinutes(30))){
+                startNotify(lastPing);
+            }
+
+            jobFinished(params, false);
+
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
 }

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".App"
+        android:name=".NotificationCreator"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -32,8 +32,13 @@
         <activity android:name=".SimulationActivity"/>
         <activity android:name=".EarthquakeListActivity"/>
         <activity android:name=".OptionsActivity"/>
-        <service android:name=".ExampleJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:exported="false"
+            android:name=".ExampleJobService">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
