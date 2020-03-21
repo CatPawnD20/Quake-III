@@ -26,8 +26,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#F44336"
-                android:text="4.2"
                 android:textStyle="bold" />
 
             <LinearLayout

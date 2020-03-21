@@ -1,5 +1,6 @@
 package com.ab.quake_iii;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -107,6 +108,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
         }
 
+        @SuppressLint("ResourceAsColor")
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -127,11 +129,23 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
             tvDate.setText(String.valueOf(date));
             tvTime.setText(String.valueOf(time));
-            tvDepth.setText(String.valueOf(depth));
+            tvDepth.setText("Derinlik :" + String.valueOf(depth) + "km");
             tvLocation.setText(String.valueOf(location));
             tvMagnitudeML.setText(String.valueOf(magnitudeML));
+            tvMagnitudeML.setBackgroundResource(defineBackgroundColor(magnitudeML));
             return convertView;
         }
+    }
+
+    
+    private static int defineBackgroundColor (Double ml){
+        if (0<=ml && ml<1.0) return R.color.colorMLWhite;
+        else if (1.0<=ml && ml<2.0) return R.color.colorMLLightBlue;
+        else if (2.0<=ml && ml<3.0) return R.color.colorMLGreen;
+        else if (3.0<=ml && ml<4.0) return R.color.colorMLOrange;
+        else if (4.0<=ml && ml<5.0) return R.color.colorMLRed;
+        else return R.color.colorMLDarkGrey;
+
     }
 
     private class RadioMLListener implements RadioGroup.OnCheckedChangeListener {
@@ -243,11 +257,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
             return temp;
 
     }
-    /*
-    anasını sıkım kör oldum 5 saattir aynı yerdeyım denemedıgım bok kalmadı kardesım bu ısı coz lutfen ne hata yaptıgımı merak edıyorum anasını sikim datelerinin tarihlerinin
-    sadece 1 günlük geriye dönük liste oluştursun amcık fonksiyon baska bir bok istemedim a.q
 
-     */
     private List<Ping> makeSelectedList(List<Ping> pingList,int timeLimit,double mlLimit){
         List<Ping> temp = new ArrayList<>();
         if (timeLimit==5){
