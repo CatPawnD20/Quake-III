@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.jakewharton.threetenabp.AndroidThreeTen;
+
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
 
@@ -50,17 +52,17 @@ public class EarthquakeListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_earthquakelist);
         pingList = MainActivity.getPingList();
 
+        AndroidThreeTen.init(this);
+
         ListView pingListView =(ListView) findViewById(R.id.pingListView);
-        PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
+        PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit,mlLimit));
         pingListView.setAdapter(adapter);
-
-
 
         radioGroupML = findViewById(R.id.radioGroupML);
         fromZeroRadio = findViewById(R.id.fromZeroRadio);
         fromOneRadio = findViewById(R.id.fromOneRadio);
         fromTwoRadio = findViewById(R.id.fromTwoRadio);
-        fromThreeRadio = findViewById(R.id.fromThreeRadio);
+
         fromFourRadio = findViewById(R.id.fromFourRadio);
         fromFiveRadio = findViewById(R.id.fromFiveRadio);
 
@@ -220,7 +222,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
             }
             else if(checkedId == R.id.oneHourRadio){
-                timeLimit = 1;
+                timeLimit = 10;
                 PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
                 pingListView.setAdapter(adapter);
 
@@ -243,20 +245,25 @@ public class EarthquakeListActivity extends AppCompatActivity {
     sadece 1 günlük geriye dönük liste oluştursun amcık fonksiyon baska bir bok istemedim a.q
 
      */
-    private List<Ping> makeSelectedList(List<Ping> pingList,int timeLimit){
+    private List<Ping> makeSelectedList(List<Ping> pingList,int timeLimit,double mlLimit){
         List<Ping> temp = new ArrayList<>();
         if (timeLimit==5){
-            return pingList;
-//        }else if(timeLimit == 1){
-//            LocalDate localDateD = LocalDate.now().minusDays(timeLimit);
-//            LocalTime localTimeD = LocalTime.now();
-//            for(Ping p : pingList){
-//                if(p.getDate().isAfter(localDateD) ||
-//                        (p.getDate().isEqual(localDateD) && p.getTime().isAfter(localTimeD))){
-//                    temp.add(p);
-//                }
-//            }
-//            return temp;
+            for (Ping p:pingList) {
+                if(p.getMagnitudeML()>mlLimit){
+                    temp.add(p);
+                }
+            }
+            return temp;
+        }else if(timeLimit == 1){
+            LocalDate localDateD = LocalDate.now().minusDays(timeLimit);
+            LocalTime localTimeD = LocalTime.now();
+            for(Ping p : pingList){
+                if(p.getDate().isAfter(localDateD) ||
+                        (p.getDate().isEqual(localDateD) && p.getTime().isAfter(localTimeD))){
+                    temp.add(p);
+                }
+            }
+            return temp;
         }
         else{
             return pingList;
