@@ -1,10 +1,14 @@
 package com.ab.quake_iii;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.widget.RadioButton;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,10 +16,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.jakewharton.threetenabp.AndroidThreeTen;
-
-/*import java.time.LocalDate;
-import java.time.LocalTime;*/
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
 import java.util.ArrayList;
@@ -26,22 +28,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private MapView mapView;
     private GoogleMap gMap;
     private RadioGroup radioGroupDepth;
-    private RadioButton fromZeroRadio;
-    private RadioButton fromOneRadio;
-    private RadioButton fromTwoRadio;
-    private RadioButton fromThreeRadio;
-    private RadioButton fromFourRadio;
-    private RadioButton fromFiveRadio;
-    private RadioButton fromSixRadio;
     private RadioGroup radioGroupTime;
-    private RadioButton allTimeRadio;
-    private RadioButton twoDaysRadio;
-    private RadioButton oneDayRadio;
-    private RadioButton twelveHoursRadio;
-    private RadioButton sixHoursRadio;
-    private RadioButton threeHoursRadio;
-    private RadioButton oneHourRadio;
-
+    private Button satelliteMapButton;
+    private Button terrainMapButton;
+    private Button normalMapButton;
+    private Button mapStyleMenu;
 
     private List<Ping> pingList;
     private List<Ping> tempPingList;
@@ -64,32 +55,57 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapView = findViewById(R.id.mapView);
 
         radioGroupDepth = findViewById(R.id.radioGroupDepth);
-        fromZeroRadio = findViewById(R.id.fromZeroRadio);
-        fromOneRadio = findViewById(R.id.fromOneRadio);
-        fromTwoRadio = findViewById(R.id.fromTwoRadio);
-        fromThreeRadio = findViewById(R.id.fromThreeRadio);
-        fromFourRadio = findViewById(R.id.fromFourRadio);
-        fromFiveRadio = findViewById(R.id.fromFiveRadio);
-        fromSixRadio = findViewById(R.id.fromSixRadio);
-
-
         radioGroupTime = findViewById(R.id.radioGroupTime);
-        allTimeRadio = findViewById(R.id.allTimeRadio);
-        twoDaysRadio = findViewById(R.id.twoDaysRadio);
-        oneDayRadio = findViewById(R.id.oneDayRadio);
-        twelveHoursRadio = findViewById(R.id.twelveHoursRadio);
-        sixHoursRadio = findViewById(R.id.sixHoursRadio);
-        threeHoursRadio = findViewById(R.id.threeHoursRadio);
-        oneHourRadio = findViewById(R.id.oneHourRadio);
 
         radioGroupDepth.setOnCheckedChangeListener(new RadioDepthListener());
         radioGroupTime.setOnCheckedChangeListener(new RadioTimeListener());
+
+        mapStyleMenu = findViewById(R.id.mapStyleMenu);
+        mapStyleMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(normalMapButton.getVisibility() == View.INVISIBLE){
+                    normalMapButton.setVisibility(View.VISIBLE);
+                    terrainMapButton.setVisibility(View.VISIBLE);
+                    satelliteMapButton.setVisibility(View.VISIBLE);
+                    mapStyleMenu.setBackgroundResource(R.drawable.cancel);
+                }else{
+                    normalMapButton.setVisibility(View.INVISIBLE);
+                    terrainMapButton.setVisibility(View.INVISIBLE);
+                    satelliteMapButton.setVisibility(View.INVISIBLE);
+                    mapStyleMenu.setBackgroundResource(R.drawable.settings);
+                }
+            }
+        });
+
+        normalMapButton = findViewById(R.id.normalButton);
+        normalMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            }
+        });
+
+        terrainMapButton = findViewById(R.id.terrainButton);
+        terrainMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            }
+        });
+
+        satelliteMapButton = findViewById(R.id.satelliteButton);
+        satelliteMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            }
+        });
 
         pingList = MainActivity.getPingList();
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-
 
     }
 
@@ -104,7 +120,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mapView.onSaveInstanceState(mapViewBundle);
     }
-
 
     @Override
     protected void onResume() {
@@ -128,14 +143,55 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+        gMap.getUiSettings().setMapToolbarEnabled(false);
+        gMap.setInfoWindowAdapter(new InfoWindowConfigure(MapActivity.this));
         addMarkerToMapWithDepth(3.0);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38,34), 5));
     }
-    /*
-    Düzeltme yaptım kanki
-    7inciyi cıkartıp 0 'ı ekledim önceki halinde haritada 0 -1 aralıgını goremıyorduk
-    All tanımını da 0 dan baslayanlara cektım
-     */
+
+    private class InfoWindowConfigure implements GoogleMap.InfoWindowAdapter{
+
+        private final View mWindow;
+        private Context context;
+
+        public InfoWindowConfigure(Context context) {
+            this.context = context;
+            this.mWindow = LayoutInflater.from(context).inflate(R.layout.configuration_mapinfo, null);
+        }
+
+        private void fillWindowText(Marker marker, View view){
+            String[] title = marker.getTitle().split("/");
+            String[] snippet = marker.getSnippet().split("/");
+
+            TextView tvLocation = view.findViewById(R.id.locationTitle);
+            tvLocation.setText(title[0]);
+
+            TextView tvMagnitude = view.findViewById(R.id.magnitudeTitle);
+            tvMagnitude.setText(title[1]);
+
+            TextView tvDepth = view.findViewById(R.id.depthTitle);
+            tvDepth.setText(snippet[0]);
+
+            TextView tvDate = view.findViewById(R.id.dateTitle);
+            tvDate.setText(snippet[1]);
+
+            TextView tvTime = view.findViewById(R.id.timeTitle);
+            tvTime.setText(snippet[2]);
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            fillWindowText(marker, mWindow);
+            return mWindow;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            fillWindowText(marker, mWindow);
+            return mWindow;
+        }
+    }
+
     private class RadioDepthListener implements RadioGroup.OnCheckedChangeListener {
 
         @Override
@@ -207,8 +263,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             LocalTime localTimeNow = LocalTime.now();
             LocalTime localTimeT = localTimeNow.minusHours(timeOrDay);
             if(localTimeNow.getHour()<timeOrDay){
-                localDateT1.minusDays(1);
                 localDateT2 = localDateT1;
+                localDateT1 = localDateT1.minusDays(1);
             }
             for(Ping p: tempPingList){
                 if((p.getTime().isAfter(localTimeT) && p.getDate().isEqual(localDateT1)) ||
