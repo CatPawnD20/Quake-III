@@ -114,6 +114,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
             LocalTime time = getItem(position).getTime();
             Double depth = getItem(position).getDepth();
             List<String> location = getItem(position).getLocation();
+            Double magnitudeML = getItem(position).getMagnitudeML();
 
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(resource,parent,false);
@@ -122,11 +123,13 @@ public class EarthquakeListActivity extends AppCompatActivity {
             TextView tvTime = (TextView) convertView.findViewById(R.id.timeView);
             TextView tvDepth = (TextView) convertView.findViewById(R.id.depthView);
             TextView tvLocation = (TextView) convertView.findViewById(R.id.locationView);
+            TextView tvMagnitudeML = (TextView) convertView.findViewById(R.id.magnitudeMLView);
 
             tvDate.setText(String.valueOf(date));
             tvTime.setText(String.valueOf(time));
             tvDepth.setText(String.valueOf(depth));
             tvLocation.setText(String.valueOf(location));
+            tvMagnitudeML.setText(String.valueOf(magnitudeML));
             return convertView;
         }
     }

@@ -21,16 +21,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button2"
+            <TextView
+                android:id="@+id/magnitudeMLView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#F44336"
-                android:shadowColor="#6E6E6E"
-                android:shadowDy="0"
-                android:shadowRadius="0"
-                android:text="Button" />
+                android:text="4.2"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/dataLayout"
