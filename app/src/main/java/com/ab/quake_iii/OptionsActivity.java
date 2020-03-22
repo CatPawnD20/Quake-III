@@ -1,57 +1,80 @@
 package com.ab.quake_iii;
 
-import android.app.job.JobInfo;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.LocalTime;
 
 public class OptionsActivity extends AppCompatActivity {
-    public static final String TAG = "OptionsActivity";
     private FirebaseJobDispatcher dispatcher;
-    NotificationManagerCompat notificationManagerCompat;
+    public NotificationManagerCompat notificationManagerCompat;
+    private Switch notificationSwitch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-        AndroidThreeTen.init(this);
         dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
         notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        notificationSwitch = findViewById(R.id.notificationSwitch);
+        if(NotificationCreator.sharedPref.getBoolean("isNotificationOn", false) == true){
+            notificationSwitch.setChecked(true);
+        }
+
+        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    NotificationCreator.editor = NotificationCreator.sharedPref.edit();
+                    NotificationCreator.editor.putBoolean("isNotificationOn", true);
+                    NotificationCreator.editor.commit();
+                    Intent intent = new Intent(OptionsActivity.this, PopUpNotificationActivity.class);
+                    startActivity(intent);
+                    startScheduleJob();
+                }else{
+                    NotificationCreator.editor = NotificationCreator.sharedPref.edit();
+                    NotificationCreator.editor.putBoolean("isNotificationOn", false);
+                    NotificationCreator.editor.commit();
+                    cancelJob();
+                }
+            }
+        });
+
+
     }
 
-    public void startScheduleJob(View view) {
-        LocalTime localTime = LocalTime.now();
-        //Eğer SDK yetersiz olursa EXampleJobService'de localtime null olur patlar dikkat et düzelt
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ExampleJobService.localTime = localTime;
-        }
+    public void startScheduleJob() {
         Job myJob = dispatcher.newJobBuilder()
-                .setService(ExampleJobService.class)
-                .setTag("my-unique-tag")
+                .setService(NotificationJobService.class)
+                .setTag("notification_job")
                 .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
                 .setLifetime(Lifetime.FOREVER)
                 .setReplaceCurrent(false)
-                .setTrigger(Trigger.executionWindow(1, 15))
+                .setConstraints(Constraint.ON_ANY_NETWORK)
+                .setTrigger(Trigger.executionWindow(10, 15))
                 .setRecurring(true)
                 .build();
 
         dispatcher.mustSchedule(myJob);
     }
 
-    public void cancelJob(View v){
-        dispatcher.cancel("muy-unique-tag");
+    public void cancelJob(){
+        dispatcher.cancel("notification_job");
     }
+
 }
+

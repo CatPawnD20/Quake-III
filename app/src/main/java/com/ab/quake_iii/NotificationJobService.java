@@ -4,18 +4,25 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationManagerCompat;
 
 import org.threeten.bp.LocalTime;
 
-public class ExampleJobService extends JobService {
+import java.util.ArrayList;
+import java.util.List;
+
+public class NotificationJobService extends JobService {
     private static final String TAG = "ExampleJobService";
     public static LocalTime localTime;
-    BackgroundTask backgroundTask;
+    private BackgroundTask backgroundTask;
+    private int selectedMagnitude;
+    private String selectedCity;
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -48,6 +55,10 @@ public class ExampleJobService extends JobService {
         private Container container;
         private JobParameters params;
         private WebListener webListener;
+        private Ping notifyPing;
+        private List<Ping> last5eq = new ArrayList<>();
+        private String lastPingInformation;
+        private Boolean isListEmpty = false;
 
         public BackgroundTask(JobParameters params) {
             this.params = params;
@@ -64,10 +75,23 @@ public class ExampleJobService extends JobService {
 
             webListener.getDataFromWeb();
 
-            Ping lastPing = container.getPingList().get(0);
+            List<Ping> allPings = container.getPingList();
 
-            if(lastPing.getTime().isAfter(localTime.minusMinutes(30))){
-                startNotify(lastPing);
+            for(int i=0; i<5; i++){
+                if(allPings.get(i).getMagnitudeML() >= (double) selectedMagnitude) {
+                    last5eq.add(allPings.get(i));
+                }
+            }
+            if(last5eq.isEmpty()){
+                isListEmpty = true;
+                jobFinished(params, false);
+                return null;
+            }else{
+                notifyPing = last5eq.get(0);
+            }
+
+            if(!(lastPingInformation.equals(notifyPing.toString())) && notifyPing.getTime().isAfter(localTime.minusMinutes(60))){
+                startNotify(notifyPing);
             }
 
             jobFinished(params, false);
@@ -78,12 +102,21 @@ public class ExampleJobService extends JobService {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            NotificationCreator.editor = NotificationCreator.sharedPref.edit();
+            selectedMagnitude = NotificationCreator.sharedPref.getInt("selectedMagnitude", 1);
+            selectedCity = NotificationCreator.sharedPref.getString("selectedCity", "Çanakkale");
+            lastPingInformation = NotificationCreator.sharedPref.getString("lastPing", "Nothing");
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            if(isListEmpty == false){
+                NotificationCreator.editor = NotificationCreator.sharedPref.edit();
+                NotificationCreator.editor.putString("lastPing", notifyPing.toString());
+                NotificationCreator.editor.commit();
+            }
         }
     }
-
 }

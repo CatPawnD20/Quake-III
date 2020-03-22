@@ -30,4 +30,16 @@
     <string name="sixHoursRadio">6H</string>
     <string name="threeHoursRadio">3H</string>
     <string name="oneHourRadio">1H</string>
+    <string name="city_prompt">Choose a city</string>
+
+    <string-array name="city_arrays">
+        <item>Türkiye</item>
+        <item>İstanbul</item>
+        <item>Ankara</item>
+        <item>İzmir</item>
+        <item>Çanakkale</item>
+        <item>Adana</item>
+        <item>Elazığ</item>
+        <item>Bursa</item>
+    </string-array>
 </resources>

@@ -36,17 +36,15 @@ public class Ping {
         point = new LatLng(latitude,longtidue);
     }
 
-    //Geçici Çözüm
-//    @Override
-//    public String toString(){
-//        return dateFormat.format(date) +
-//                " " + timeFormat.format(time) +
-//                "                " + String.format(String.valueOf(depth)) +
-//                "          " + magnitudeMD +
-//                " " + magnitudeML +
-//                " " + magnitudeMW +
-//                "      " + settings;
-//    }
+    //Notification'da dosya olarak tutulacak depremler için geçici aktif edildi.
+    @Override
+    public String toString(){
+        return  location + " " +
+                date + " " +
+                time + " " +
+                magnitudeML + " " +
+                depth;
+    }
 
     public LatLng getPoint() {
         return point;
