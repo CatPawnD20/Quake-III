@@ -4,4 +4,14 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorSplash">#FFEB3B</color>
+    <color name="colorSp2lash">#04000B</color>
+    <color name="colorMLWhite">#D5D1B3</color>
+    <color name="colorMLLightBlue">#00BCD4</color>
+    <color name="colorMLGreen">#CDDC39</color>
+    <color name="colorMLOrange">#FF9800</color>
+    <color name="colorMLRed">#F44336</color>
+    <color name="colorMLPurple">#9C27B0</color>
+    <color name="colorMLDarkBlue">#233CC8</color>
+    <color name="colorMLDarkGrey">#6D706F</color>
+    <color name="colorMLBlack">#04000B</color>
 </resources>

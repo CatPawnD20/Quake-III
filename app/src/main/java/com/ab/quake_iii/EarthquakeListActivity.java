@@ -1,5 +1,6 @@
 package com.ab.quake_iii;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
@@ -50,17 +53,17 @@ public class EarthquakeListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_earthquakelist);
         pingList = MainActivity.getPingList();
 
+        AndroidThreeTen.init(this);
+
         ListView pingListView =(ListView) findViewById(R.id.pingListView);
-        PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
+        PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit,mlLimit));
         pingListView.setAdapter(adapter);
-
-
 
         radioGroupML = findViewById(R.id.radioGroupML);
         fromZeroRadio = findViewById(R.id.fromZeroRadio);
         fromOneRadio = findViewById(R.id.fromOneRadio);
         fromTwoRadio = findViewById(R.id.fromTwoRadio);
-        fromThreeRadio = findViewById(R.id.fromThreeRadio);
+
         fromFourRadio = findViewById(R.id.fromFourRadio);
         fromFiveRadio = findViewById(R.id.fromFiveRadio);
 
@@ -105,6 +108,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
         }
 
+        @SuppressLint("ResourceAsColor")
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -112,6 +116,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
             LocalTime time = getItem(position).getTime();
             Double depth = getItem(position).getDepth();
             List<String> location = getItem(position).getLocation();
+            Double magnitudeML = getItem(position).getMagnitudeML();
 
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(resource,parent,false);
@@ -120,13 +125,27 @@ public class EarthquakeListActivity extends AppCompatActivity {
             TextView tvTime = (TextView) convertView.findViewById(R.id.timeView);
             TextView tvDepth = (TextView) convertView.findViewById(R.id.depthView);
             TextView tvLocation = (TextView) convertView.findViewById(R.id.locationView);
+            TextView tvMagnitudeML = (TextView) convertView.findViewById(R.id.magnitudeMLView);
 
             tvDate.setText(String.valueOf(date));
             tvTime.setText(String.valueOf(time));
-            tvDepth.setText(String.valueOf(depth));
+            tvDepth.setText("Derinlik :" + String.valueOf(depth) + "km");
             tvLocation.setText(String.valueOf(location));
+            tvMagnitudeML.setText(String.valueOf(magnitudeML));
+            tvMagnitudeML.setBackgroundResource(defineBackgroundColor(magnitudeML));
             return convertView;
         }
+    }
+
+    
+    private static int defineBackgroundColor (Double ml){
+        if (0<=ml && ml<1.0) return R.color.colorMLWhite;
+        else if (1.0<=ml && ml<2.0) return R.color.colorMLLightBlue;
+        else if (2.0<=ml && ml<3.0) return R.color.colorMLGreen;
+        else if (3.0<=ml && ml<4.0) return R.color.colorMLOrange;
+        else if (4.0<=ml && ml<5.0) return R.color.colorMLRed;
+        else return R.color.colorMLDarkGrey;
+
     }
 
     private class RadioMLListener implements RadioGroup.OnCheckedChangeListener {
@@ -220,7 +239,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
             }
             else if(checkedId == R.id.oneHourRadio){
-                timeLimit = 1;
+                timeLimit = 10;
                 PingListAdapter adapter = new PingListAdapter(EarthquakeListActivity.this,R.layout.configuration_listview,makeSelectedList(pingList, timeLimit));
                 pingListView.setAdapter(adapter);
 
@@ -238,25 +257,26 @@ public class EarthquakeListActivity extends AppCompatActivity {
             return temp;
 
     }
-    /*
-    anasını sıkım kör oldum 5 saattir aynı yerdeyım denemedıgım bok kalmadı kardesım bu ısı coz lutfen ne hata yaptıgımı merak edıyorum anasını sikim datelerinin tarihlerinin
-    sadece 1 günlük geriye dönük liste oluştursun amcık fonksiyon baska bir bok istemedim a.q
 
-     */
-    private List<Ping> makeSelectedList(List<Ping> pingList,int timeLimit){
+    private List<Ping> makeSelectedList(List<Ping> pingList,int timeLimit,double mlLimit){
         List<Ping> temp = new ArrayList<>();
         if (timeLimit==5){
-            return pingList;
-//        }else if(timeLimit == 1){
-//            LocalDate localDateD = LocalDate.now().minusDays(timeLimit);
-//            LocalTime localTimeD = LocalTime.now();
-//            for(Ping p : pingList){
-//                if(p.getDate().isAfter(localDateD) ||
-//                        (p.getDate().isEqual(localDateD) && p.getTime().isAfter(localTimeD))){
-//                    temp.add(p);
-//                }
-//            }
-//            return temp;
+            for (Ping p:pingList) {
+                if(p.getMagnitudeML()>mlLimit){
+                    temp.add(p);
+                }
+            }
+            return temp;
+        }else if(timeLimit == 1){
+            LocalDate localDateD = LocalDate.now().minusDays(timeLimit);
+            LocalTime localTimeD = LocalTime.now();
+            for(Ping p : pingList){
+                if(p.getDate().isAfter(localDateD) ||
+                        (p.getDate().isEqual(localDateD) && p.getTime().isAfter(localTimeD))){
+                    temp.add(p);
+                }
+            }
+            return temp;
         }
         else{
             return pingList;

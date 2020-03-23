@@ -30,4 +30,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.2'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.6'
+    implementation 'org.jetbrains:annotations-java5:15.0'
+
 }
