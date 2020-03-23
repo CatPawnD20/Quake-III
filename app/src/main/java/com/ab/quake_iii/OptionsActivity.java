@@ -53,8 +53,6 @@ public class OptionsActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     public void startScheduleJob() {
@@ -65,7 +63,7 @@ public class OptionsActivity extends AppCompatActivity {
                 .setLifetime(Lifetime.FOREVER)
                 .setReplaceCurrent(false)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
-                .setTrigger(Trigger.executionWindow(10, 15))
+                .setTrigger(Trigger.executionWindow(300, 320))
                 .setRecurring(true)
                 .build();
 

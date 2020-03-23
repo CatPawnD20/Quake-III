@@ -31,7 +31,7 @@ public class MarkerCreator {
     private void fillMarkerList(){
         for(Ping p : pingList){
             //Pop-up ve verilen bilgiler düzenlenecek
-            String title = p.getLocation() + "/Magnitude: " + p.getMagnitudeML();
+            String title = p.getLocationProperString() + "/Magnitude: " + p.getMagnitudeML();
             MarkerOptions markerOptions = new MarkerOptions().position(p.getPoint()).title(title)
                     .snippet("Depth: " + p.getDepth() + "/Date: " + p.getDate() + "/Time: " + p.getTime())
                     .icon(bitmapDescriptorFromVector (MainActivity.context, R.drawable.dot));

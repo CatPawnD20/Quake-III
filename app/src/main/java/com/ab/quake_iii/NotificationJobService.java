@@ -8,7 +8,6 @@ import com.firebase.jobdispatcher.JobService;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationManagerCompat;
 
@@ -40,8 +39,8 @@ public class NotificationJobService extends JobService {
     }
 
     public int startNotify(Ping lastPing) {
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,0 );
+        Intent notificationIntent = new Intent(this, SplashActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,0);
 
         NotificationCreator nc = new NotificationCreator();
         Notification notification = nc.createNotification(pendingIntent, this, lastPing);
@@ -117,6 +116,7 @@ public class NotificationJobService extends JobService {
                 NotificationCreator.editor.putString("lastPing", notifyPing.toString());
                 NotificationCreator.editor.commit();
             }
+            WebListener.flag = false;
         }
     }
 }

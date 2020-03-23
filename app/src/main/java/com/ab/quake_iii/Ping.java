@@ -46,6 +46,14 @@ public class Ping {
                 depth;
     }
 
+    public String getLocationProperString(){
+        StringBuilder sb = new StringBuilder();
+        for(String s : getLocation()){
+            sb.append(s + " ");
+        }
+        return sb.toString();
+    }
+
     public LatLng getPoint() {
         return point;
     }

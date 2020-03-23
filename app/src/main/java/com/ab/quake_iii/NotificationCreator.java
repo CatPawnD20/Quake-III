@@ -47,7 +47,7 @@ public class NotificationCreator extends Application{
 
     public Notification createNotification(PendingIntent pendingIntent, NotificationJobService notificationJobService, Ping lastPing) {
         Notification notification = new NotificationCompat.Builder(notificationJobService, CHANNEL_ID)
-                .setContentTitle("Location: " + lastPing.getLocation().toString())
+                .setContentTitle("Location: " + lastPing.getLocationProperString())
                 .setContentText("Magnitude: " + lastPing.getMagnitudeML() + " Date: " + lastPing.getDate() + " Time: " + lastPing.getTime())
                 .setSmallIcon(R.drawable.normal_map)
                 .setContentIntent(pendingIntent)

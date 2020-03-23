@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = this;
+
+        //Map has to be initialized before it can be used
         MapsInitializer.initialize(getApplicationContext());
 
         Creator creator = new Creator();
@@ -50,10 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static void getDataFromWeb() {
+
         WebListener webListener = (WebListener) new WebListener().execute();
+
         /*Veri çekme işi background'da olmalı ve çakışma olduğu için bir süre veri çekilmesi beklenmeli
           Başka çözümler bulunabilir. Fakat verinin tam gelmemesi, geç gelmesi gibi durumlara test ile
           çözümler üretilmeli */
+
         try {
             while (webListener.flag == false){
                 Thread.sleep(500);

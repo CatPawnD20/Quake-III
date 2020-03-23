@@ -31,6 +31,10 @@
     <string name="threeHoursRadio">3H</string>
     <string name="oneHourRadio">1H</string>
     <string name="city_prompt">Choose a city</string>
+    <string name="notification">Notification</string>
+    <string name="notificationConfiguration">Notification Configuration</string>
+    <string name="applyButton">Apply</string>
+    <string name="cancelButton">Cancel</string>
 
     <string-array name="city_arrays">
         <item>Türkiye</item>
