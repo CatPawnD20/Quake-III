@@ -4,12 +4,12 @@
     android:layout_width="match_parent">
 
     <item
-        android:drawable="@color/colorSplash"/>
+        android:drawable="@drawable/splash_background"/>
 
-    <item>
+    <!--<item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/magnitude"/>
-    </item>
+            android:src="@drawable/ic_splash_logo" />
+    </item>-->
 
 </layer-list>

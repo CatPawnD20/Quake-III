@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pop_up_bg">
+    android:background="@drawable/pop_up_background">
 
 
     <LinearLayout
@@ -69,7 +69,9 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
-                android:text="@string/applyButton" />
+                android:background="@drawable/main_button_background"
+                android:text="@string/applyButton"
+                android:textColor="#F2E3EE" />
 
             <Button
                 android:id="@+id/buttonCancel"
@@ -77,7 +79,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/cancelButton" />
+                android:background="@drawable/main_button_background"
+                android:text="@string/cancelButton"
+                android:textColor="#F2E3EE" />
         </LinearLayout>
 
     </LinearLayout>

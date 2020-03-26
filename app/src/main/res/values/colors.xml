@@ -14,4 +14,11 @@
     <color name="colorMLDarkBlue">#233CC8</color>
     <color name="colorMLDarkGrey">#6D706F</color>
     <color name="colorMLBlack">#04000B</color>
+    <color name="ic_launcher_background">#8F005E</color>
+    <color name="go_back_menu_image_background">#AA05DC</color>
+    <color name="cancel_menu_image_background">#3DDC84</color>
+    <color name="normal_image_background">#AA05DC</color>
+    <color name="satellite_image_background">#AA05DC</color>
+    <color name="terrain_image_background">#AA05DC</color>
+
 </resources>

@@ -2,6 +2,8 @@ package com.ab.quake_iii;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -21,7 +23,7 @@ public class OptionsActivity extends AppCompatActivity {
     private FirebaseJobDispatcher dispatcher;
     public NotificationManagerCompat notificationManagerCompat;
     private Switch notificationSwitch;
-
+    private Button notificationSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,15 +32,18 @@ public class OptionsActivity extends AppCompatActivity {
         dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
         notificationManagerCompat = NotificationManagerCompat.from(this);
 
+        notificationSettingsButton = findViewById(R.id.notificationSettings);
         notificationSwitch = findViewById(R.id.notificationSwitch);
         if(NotificationCreator.sharedPref.getBoolean("isNotificationOn", false) == true){
             notificationSwitch.setChecked(true);
+            notificationSettingsButton.setVisibility(View.VISIBLE);
         }
 
         notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
+                    notificationSettingsButton.setVisibility(View.VISIBLE);
                     NotificationCreator.editor = NotificationCreator.sharedPref.edit();
                     NotificationCreator.editor.putBoolean("isNotificationOn", true);
                     NotificationCreator.editor.commit();
@@ -46,11 +51,20 @@ public class OptionsActivity extends AppCompatActivity {
                     startActivity(intent);
                     startScheduleJob();
                 }else{
+                    notificationSettingsButton.setVisibility(View.INVISIBLE);
                     NotificationCreator.editor = NotificationCreator.sharedPref.edit();
                     NotificationCreator.editor.putBoolean("isNotificationOn", false);
                     NotificationCreator.editor.commit();
                     cancelJob();
                 }
+            }
+        });
+
+        notificationSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OptionsActivity.this, PopUpNotificationActivity.class);
+                startActivity(intent);
             }
         });
     }
