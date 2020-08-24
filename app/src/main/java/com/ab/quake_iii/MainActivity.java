@@ -3,6 +3,7 @@ package com.ab.quake_iii;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,12 +24,16 @@ public class MainActivity extends AppCompatActivity {
     private static List<MarkerOptions> markerList;
     public static Context context;
 
+    private static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         context = this;
+
+        Log.i(TAG, "KendimeLog: Uygulama başladı.");
 
         //Map has to be initialized before it can be used
         MapsInitializer.initialize(getApplicationContext());
@@ -48,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
         earthquakeListButton.setOnClickListener(new earthquakeListScreen());
         optionsButton.setOnClickListener(new optionsScreen());
 
-    }
+        Log.i(TAG, "KendimeLog: Uygulama hazır hale geldi.");
 
+    }
 
     public static void getDataFromWeb() {
 
@@ -66,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         webListener.getDataFromWeb();
+
     }
 
     @Override

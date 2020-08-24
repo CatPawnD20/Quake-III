@@ -45,8 +45,6 @@ public class EarthquakeListActivity extends AppCompatActivity {
     private static double mlLimit = 0;
     private static int timeLimit = 5;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

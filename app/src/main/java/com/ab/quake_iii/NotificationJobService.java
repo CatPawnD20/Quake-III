@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationJobService extends JobService {
-    private static final String TAG = "ExampleJobService";
+    private static final String TAG = "NotificationJobService";
     public static LocalTime localTime;
     private BackgroundTask backgroundTask;
     private int selectedMagnitude;
@@ -25,7 +25,7 @@ public class NotificationJobService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        Log.d(TAG, "Schedule Job Started.");
+        Log.i(TAG, "KendimeLog: Schedule Job Started.");
         backgroundTask = new BackgroundTask(params);
 
         backgroundTask.execute();
@@ -34,7 +34,7 @@ public class NotificationJobService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.d(TAG, "Schedule Job Stopped.");
+        Log.i(TAG, "KendimeLog: Schedule Job Stopped.");
         return true;
     }
 
@@ -74,6 +74,8 @@ public class NotificationJobService extends JobService {
 
             webListener.getDataFromWeb();
 
+            Log.i(TAG, "KendimeLog: Pingler başarılı yaratıldı. Bildirim için Ping kontrolü işlemi başladı.");
+
             List<Ping> allPings = container.getPingList();
 
             for(int i=0; i<5; i++){
@@ -95,12 +97,17 @@ public class NotificationJobService extends JobService {
 
             jobFinished(params, false);
 
+            Log.i(TAG, "KendimeLog: Schedule Job Finished.");
+
             return null;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            //Eğer app açılma sürecindeyse kendini sonlandırsın bu seferlik.Ya exit ya da stop bir şey. sanırım finished
+
             NotificationCreator.editor = NotificationCreator.sharedPref.edit();
             selectedMagnitude = NotificationCreator.sharedPref.getInt("selectedMagnitude", 1);
             selectedCity = NotificationCreator.sharedPref.getString("selectedCity", "Çanakkale");
@@ -113,10 +120,10 @@ public class NotificationJobService extends JobService {
 
             if(isListEmpty == false){
                 NotificationCreator.editor = NotificationCreator.sharedPref.edit();
+                NotificationCreator.editor.remove("lastPing");
                 NotificationCreator.editor.putString("lastPing", notifyPing.toString());
                 NotificationCreator.editor.commit();
             }
-            WebListener.flag = false;
         }
     }
 }

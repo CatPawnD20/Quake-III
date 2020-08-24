@@ -45,6 +45,7 @@ public class OptionsActivity extends AppCompatActivity {
                 if(isChecked){
                     notificationSettingsButton.setVisibility(View.VISIBLE);
                     NotificationCreator.editor = NotificationCreator.sharedPref.edit();
+                    NotificationCreator.editor.remove("isNotificationOn");
                     NotificationCreator.editor.putBoolean("isNotificationOn", true);
                     NotificationCreator.editor.commit();
                     Intent intent = new Intent(OptionsActivity.this, PopUpNotificationActivity.class);
@@ -53,6 +54,7 @@ public class OptionsActivity extends AppCompatActivity {
                 }else{
                     notificationSettingsButton.setVisibility(View.INVISIBLE);
                     NotificationCreator.editor = NotificationCreator.sharedPref.edit();
+                    NotificationCreator.editor.remove("isNotificationOn");
                     NotificationCreator.editor.putBoolean("isNotificationOn", false);
                     NotificationCreator.editor.commit();
                     cancelJob();
@@ -77,7 +79,7 @@ public class OptionsActivity extends AppCompatActivity {
                 .setLifetime(Lifetime.FOREVER)
                 .setReplaceCurrent(false)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
-                .setTrigger(Trigger.executionWindow(300, 320))
+                .setTrigger(Trigger.executionWindow(100, 120))
                 .setRecurring(true)
                 .build();
 

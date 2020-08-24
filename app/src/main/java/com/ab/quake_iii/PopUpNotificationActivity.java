@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -24,7 +25,7 @@ public class PopUpNotificationActivity extends Activity {
     private Button buttonApply;
     private Button buttonCancel;
     private int selectedMagnitude = 1;
-    private String selectedCity;
+    private String selectedCity = "Türkiye";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class PopUpNotificationActivity extends Activity {
         spinnerCity = findViewById(R.id.spinnerCity);
         buttonApply = findViewById(R.id.buttonApply);
         buttonCancel = findViewById(R.id.buttonCancel);
+        seekBar = findViewById(R.id.seekBarMagnitude);
 
         buttonApply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,24 +73,29 @@ public class PopUpNotificationActivity extends Activity {
             }
         });
 
+        if(NotificationCreator.sharedPref.contains("selectedMagnitude") && NotificationCreator.sharedPref.contains("selectedCity")){
+            selectedMagnitude = NotificationCreator.sharedPref.getInt("selectedMagnitude", 1);
+            selectedCity = NotificationCreator.sharedPref.getString("selectedCity", "Türkiye");
+        }
 
-        seekBar = findViewById(R.id.seekBarMagnitude);
-        seekBar.setThumb(getThumb(1));
+        //Eğer daha önceden bildirim için magnitude belirlenmişse tekrar ayarlamaya çalıştığında eski magnitude görsün
+        seekBar.setThumb(getThumb(selectedMagnitude));
+        seekBar.setProgress(selectedMagnitude);
+
+        spinnerCity.setSelection(((ArrayAdapter<String>)spinnerCity.getAdapter()).getPosition(selectedCity));
+
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 seekBar.setThumb(getThumb(progress));
                 selectedMagnitude = progress;
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
